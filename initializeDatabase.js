@@ -1,50 +1,53 @@
 const mongoose = require('mongoose');
-const {DATABASE_URL, DATABASE_NAME} = require("./constant");
+const constants = require("./constant");
 
 // Connexion à MongoDB
-mongoose.connect(`${DATABASE_URL}/${DATABASE_NAME}`, {useNewUrlParser: true, useUnifiedTopology: true});
+mongoose.connect(`${constants.DATABASE_URL}/${constants.DATABASE_NAME}`, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true
+});
 
 // Schémas
 const userSchema = new mongoose.Schema({
-    email: String,
-    password_hash: String,
-    username: String,
-    role_id: mongoose.Schema.Types.ObjectId,
-    firstname: String,
-    lastname: String,
-    birthday: Date,
-    created_events_id: mongoose.Schema.Types.ObjectId
+    email: {type: String, unique: true, required: true},
+    password_hash: {type: String, required: true},
+    username: {type: String, unique: true, required: true},
+    role_id: {type: mongoose.Schema.Types.ObjectId, required: true},
+    firstname: {type: String, required: true},
+    lastname: {type: String, required: true},
+    birthday: {type: Date, required: true}
 });
 
 const userRoleSchema = new mongoose.Schema({
-    role: String
+    role: {type: String, required: true}
 });
 
 const eventSchema = new mongoose.Schema({
-    created_by: String, // Correspond à user_email
-    theme_id: mongoose.Schema.Types.ObjectId,
-    name: String,
-    date: Date
+    created_by_email: {type: String, required: true},
+    theme_id: {type: mongoose.Schema.Types.ObjectId, required: true},
+    name: {type: String, required: true},
+    date: {type: Date, required: true}
 });
 
 const eventThemeSchema = new mongoose.Schema({
-    theme: String
+    theme: {type: String, required: true}
 });
 
 const userLikeEventSchema = new mongoose.Schema({
-    user_email: String,
-    event_id: mongoose.Schema.Types.ObjectId
+    user_email: {type: String, required: true},
+    event_id: {type: mongoose.Schema.Types.ObjectId, required: true}
 });
 
 const chatSchema = new mongoose.Schema({
-    user_email1: String,
-    user_email2: String
+    user_email1: {type: String, required: true},
+    user_email2: {type: String, required: true}
 });
 
 const messageSchema = new mongoose.Schema({
-    sender_email: String,
-    date: Date,
-    chat_id: mongoose.Schema.Types.ObjectId
+    sender_email: {type: String, required: true},
+    date: {type: Date, required: true},
+    chat_id: {type: mongoose.Schema.Types.ObjectId, required: true},
+    message: {type: String, required: true}
 });
 
 // Modèles
@@ -56,9 +59,7 @@ const UserLikeEvent = mongoose.model('UserLikeEvent', userLikeEventSchema);
 const Chat = mongoose.model('Chat', chatSchema);
 const Message = mongoose.model('Message', messageSchema);
 
-// Fonction pour insérer des données d'exemple
-async function populateDatabase() {
-    // Supprimez les anciennes données
+async function deleteOldData() {
     await User.deleteMany({});
     await UserRole.deleteMany({});
     await Event.deleteMany({});
@@ -66,12 +67,14 @@ async function populateDatabase() {
     await UserLikeEvent.deleteMany({});
     await Chat.deleteMany({});
     await Message.deleteMany({});
+}
 
-    // Insérez des rôles d'utilisateur
+async function populateDatabase() {
+    await deleteOldData();
+
     const roleAdmin = await new UserRole({role: 'Admin'}).save();
     const roleUser = await new UserRole({role: 'User'}).save();
 
-    // Insérez des utilisateurs
     const user1 = await new User({
         email: 'user1@example.com',
         password_hash: 'hash1',
@@ -92,26 +95,26 @@ async function populateDatabase() {
         birthday: new Date('1992-05-15')
     }).save();
 
-    // Insérez des thèmes d'événement
-    const themeParty = await new EventTheme({theme: 'Party'}).save();
-    const themeConference = await new EventTheme({theme: 'Conference'}).save();
+    const sportEvent = await new EventTheme({theme: 'Sport'}).save();
+    await new EventTheme({theme: 'Culture'}).save();
+    await new EventTheme({theme: 'Festif'}).save();
+    await new EventTheme({theme: 'Professionnel'}).save();
+    await new EventTheme({theme: 'Autre'}).save();
 
-    // Insérez des événements
     const event1 = await new Event({
-        created_by: user1.email,
-        theme_id: themeParty._id,
+        created_by_email: user1.email,
+        theme_id: sportEvent._id,
         name: 'Birthday Bash',
         date: new Date('2023-11-25')
     }).save();
 
     const event2 = await new Event({
-        created_by: user2.email,
-        theme_id: themeConference._id,
+        created_by_email: user2.email,
+        theme_id: sportEvent._id,
         name: 'Tech Conference',
         date: new Date('2024-02-20')
     }).save();
 
-    // Insérez des likes d'événements par les utilisateurs
     await new UserLikeEvent({
         user_email: user1.email,
         event_id: event1._id
@@ -122,27 +125,26 @@ async function populateDatabase() {
         event_id: event2._id
     }).save();
 
-    // Insérez des chats entre utilisateurs
     const chat1 = await new Chat({
         user_email1: user1.email,
         user_email2: user2.email
     }).save();
 
-    // Insérez des messages dans les chats
     await new Message({
         sender_email: user1.email,
         date: new Date(),
-        chat_id: chat1._id
+        chat_id: chat1._id,
+        message: "SUPER MESSAGE DE FOU FURAX"
     }).save();
 
     await new Message({
         sender_email: user2.email,
         date: new Date(),
-        chat_id: chat1._id
+        chat_id: chat1._id,
+        message: "SUPER MESSAGE DE FOU FURAX"
     }).save();
 
-    console.log('Base de données peuplée avec succès!');
+    console.log('Database successfully initialized!');
 }
 
-// Exécuter le script
 populateDatabase().then(() => mongoose.connection.close());
