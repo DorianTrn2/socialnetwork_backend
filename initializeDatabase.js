@@ -1,5 +1,4 @@
 const mongoose = require('mongoose');
-const constants = require("./constant");
 const User = require("./models/User");
 const UserRole = require("./models/UserRole");
 const Event = require("./models/Event");
@@ -8,6 +7,8 @@ const UserLikeEvent = require("./models/UserLikeEvent");
 const Chat = require("./models/Chat");
 const Message = require("./models/Message");
 const data = require("./__data__/databaseData");
+const dotenv = require('dotenv');
+dotenv.config();
 
 async function deleteOldData() {
     await User.deleteMany({});
@@ -82,7 +83,7 @@ async function populateDatabase() {
 
 async function main() {
     try {
-        await mongoose.connect(`${constants.DATABASE_URL}/${constants.DATABASE_NAME}`, {
+        await mongoose.connect(`${process.env.DATABASE_URL}/${process.env.DATABASE_NAME}`, {
             useNewUrlParser: true,
             useUnifiedTopology: true,
             serverSelectionTimeoutMS: 30000
