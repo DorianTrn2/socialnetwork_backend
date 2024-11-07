@@ -13,6 +13,28 @@ const homeRouter = require('./routes/home.js');
 const app = express();
 const port = 3001;
 
+app.use(morgan('dev'));
+
+app.set('views', path.join(__dirname, 'views'));
+app.set('view engine', 'pug');
+app.use(morgan('dev'));
+app.use(express.urlencoded({ extended: true }))
+
+app.use(session({
+    secret: 'top secret',
+    resave: true,
+    saveUninitialized: true
+}));
+
+app.use('/', indexRouter);
+app.use('/auth', authRouter);
+app.use('/home', homeRouter);
+
+// server start
+app.listen(port, () => {
+    console.log(`Listening on port ${port}`);
+});
+
 async function connectToMongoDB() {
     try {
         await mongoose.connect(`${constants.DATABASE_URL}/${constants.DATABASE_NAME}`, {
@@ -27,26 +49,4 @@ async function connectToMongoDB() {
     }
 }
 
-connectToMongoDB().then(() => {
-    app.use(morgan('dev'));
-
-    app.set('views', path.join(__dirname, 'views'));
-    app.set('view engine', 'pug');
-    app.use(morgan('dev'));
-    app.use(express.urlencoded({ extended: true }))
-
-    app.use(session({
-        secret: 'top secret',
-        resave: true,
-        saveUninitialized: true
-    }));
-
-    app.use('/', indexRouter);
-    app.use('/auth', authRouter);
-    app.use('/home', homeRouter);
-
-    // server start
-    app.listen(port, () => {
-        console.log(`Listening on port ${port}`);
-    });
-});
+connectToMongoDB();
