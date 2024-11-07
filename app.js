@@ -9,6 +9,7 @@ const mongoose = require("mongoose");
 const indexRouter = require('./routes/index.js');
 const authRouter = require('./routes/auth.js');
 const homeRouter = require('./routes/event.js');
+const userRouter = require('./routes/user.js');
 
 const app = express();
 const port = 3001;
@@ -17,8 +18,7 @@ app.use(morgan('dev'));
 
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'pug');
-app.use(morgan('dev'));
-app.use(express.urlencoded({ extended: true }))
+app.use(express.urlencoded({extended: true}))
 
 app.use(session({
     secret: 'top secret',
@@ -29,6 +29,7 @@ app.use(session({
 app.use('/', indexRouter);
 app.use('/auth', authRouter);
 app.use('/event', homeRouter);
+app.use('/user/:user_id', userRouter);
 
 // server start
 if (process.env.CI) {
