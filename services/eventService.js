@@ -23,19 +23,29 @@ async function addEvent(event) {
 }
 
 /**
- * Update an event in the database.
+ * Update the selected event in the database.
  *
  * @param event the updated event
  * @param event_id the id of the event to update
  * @returns the updated event Object
  */
 async function updateEvent(event, event_id) {
-    return Event.findByIdAndUpdate(event_id, {
+    return Event.updateOne({_id: event_id}, {
         name: event.name,
         theme_id: event.theme_id,
         date: event.date,
         created_by_email: event.created_by_email,
-    }, {useFindAndModify: false, returnOriginal: false});
+    });
+}
+
+/**
+ * Delete the selected event in the database.
+ *
+ * @param event_id the id of the event to delete
+ * @returns the updated event Object
+ */
+async function deleteEvent(event_id) {
+    return Event.deleteOne({_id: event_id});
 }
 
 module.exports = {
@@ -44,4 +54,5 @@ module.exports = {
     getEventById,
     addEvent,
     updateEvent,
+    deleteEvent,
 }

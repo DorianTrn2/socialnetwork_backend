@@ -120,9 +120,31 @@ async function updateEvent(req, res) {
     }
 }
 
+async function deleteEvent(req, res) {
+    try {
+        const {event_id} = req.params;
+
+        if (!event_id) {
+            return res.status(404).json({message: 'Error - parameter event_id is undefined'});
+        }
+
+        const updatedEvent = await eventService.deleteEvent(event_id);
+
+        if (updatedEvent === null) {
+            return res.status(404).json({message: 'Error - received object is null => not updated'});
+        }
+
+        res.status(201).json(updatedEvent);
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({message: 'Internal server error'});
+    }
+}
+
 module.exports = {
     getAllEvents,
     getEventById,
     addEvent,
     updateEvent,
+    deleteEvent,
 }
