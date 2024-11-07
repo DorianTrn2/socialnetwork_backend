@@ -7,6 +7,8 @@ const path = require('path');
 const session = require("express-session");
 const cookieParser = require('cookie-parser');
 
+const verifyToken = require("./middleware/authMiddleware")
+
 const indexRouter = require('./routes/index.js');
 const authRouter = require('./routes/auth.js');
 const homeRouter = require('./routes/event.js');
@@ -21,7 +23,7 @@ app.use(morgan('dev'));
 
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'pug');
-app.use(express.urlencoded({ extended: true }))
+app.use(express.urlencoded({extended: true}))
 app.use(express.json());
 app.use(cookieParser());
 
@@ -34,7 +36,7 @@ app.use(session({
 app.use('/', indexRouter);
 app.use('/auth', authRouter);
 app.use('/event', homeRouter);
-app.use('/user/:user_id', userRouter);
+app.use('/user', verifyToken, userRouter); // Must be authenticated to be there
 
 // server start
 if (process.env.CI) {
