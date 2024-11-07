@@ -69,11 +69,11 @@ async function getEventById(req, res) {
 
 async function addEvent(req, res) {
     try {
-        const {created_by_email, theme_id, name, date} = req.body;
+        const {created_by_email, theme_code, name, date} = req.body;
 
         const eventToAdd = new Event({
             created_by_email,
-            theme_id,
+            theme_code,
             name,
             date
         });
@@ -93,7 +93,7 @@ async function addEvent(req, res) {
 
 async function updateEvent(req, res) {
     try {
-        const {created_by_email, theme_id, name, date} = req.body;
+        const {created_by_email, theme_code, name, date} = req.body;
         const {event_id} = req.params;
 
         if (!event_id) {
@@ -102,18 +102,18 @@ async function updateEvent(req, res) {
 
         const event = new Event({
             created_by_email,
-            theme_id,
+            theme_code,
             name,
             date
         });
 
-        const updatedEvent = await eventService.updateEvent(event, event_id);
+        const result = await eventService.updateEvent(event, event_id);
 
-        if (updatedEvent === null) {
+        if (result === null) {
             return res.status(404).json({message: 'Error - received object is null => not updated'});
         }
 
-        res.status(201).json(updatedEvent);
+        res.status(201).json(result);
     } catch (error) {
         console.error(error);
         res.status(500).json({message: 'Internal server error'});
@@ -128,13 +128,13 @@ async function deleteEvent(req, res) {
             return res.status(404).json({message: 'Error - parameter event_id is undefined'});
         }
 
-        const updatedEvent = await eventService.deleteEvent(event_id);
+        const result = await eventService.deleteEvent(event_id);
 
-        if (updatedEvent === null) {
-            return res.status(404).json({message: 'Error - received object is null => not updated'});
+        if (result === null) {
+            return res.status(404).json({message: 'Error - received object is null => not deleted'});
         }
 
-        res.status(201).json(updatedEvent);
+        res.status(201).json(result);
     } catch (error) {
         console.error(error);
         res.status(500).json({message: 'Internal server error'});

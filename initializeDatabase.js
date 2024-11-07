@@ -23,32 +23,24 @@ async function deleteOldData() {
 async function populateDatabase() {
     await deleteOldData();
 
-    const rolesMap = {};
     for (const roleData of data.roles) {
-        const role = await new UserRole(roleData).save();
-        rolesMap[roleData.role] = role._id;
+        await new UserRole(roleData).save();
     }
 
     const usersMap = {};
     for (const userData of data.users) {
-        const user = await new User({
-            ...userData,
-            role_id: rolesMap[userData.role]
-        }).save();
+        const user = await new User(userData).save();
         usersMap[userData.email] = user;
     }
 
-    const themesMap = {};
     for (const themeData of data.themes) {
-        const theme = await new EventTheme(themeData).save();
-        themesMap[themeData.theme] = theme._id;
+        await new EventTheme(themeData).save();
     }
 
     const eventsMap = {};
     for (const eventData of data.events) {
         const event = await new Event({
             ...eventData,
-            theme_id: themesMap[eventData.theme],
             created_by_email: eventData.created_by_email
         }).save();
         eventsMap[eventData.name] = event;
