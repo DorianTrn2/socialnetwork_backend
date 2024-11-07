@@ -1,14 +1,14 @@
-// index.js
 const mongoose = require('mongoose');
 const constants = require("./constant");
-const {User} = require("./models/User");
-const {UserRole} = require("./models/UserRole");
-const {Event} = require("./models/Event");
-const {EventTheme} = require("./models/EventTheme");
-const {UserLikeEvent} = require("./models/UserLikeEvent");
-const {Chat} = require("./models/Chat");
-const {Message} = require("./models/Message");
-const {data} = require("./__data__/databaseData");
+
+const User = require("./models/User");
+const UserRole = require("./models/UserRole");
+const Event = require("./models/Event");
+const EventTheme = require("./models/EventTheme");
+const UserLikeEvent = require("./models/UserLikeEvent");
+const Chat = require("./models/Chat");
+const Message = require("./models/Message");
+const data = require("./__data__/databaseData");
 const dotenv = require('dotenv');
 dotenv.config();
 

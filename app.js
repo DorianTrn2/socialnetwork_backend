@@ -7,11 +7,18 @@ const dotenv = require('dotenv');
 
 const path = require('path');
 const session = require("express-session");
+const constants = require("./constant");
+const mongoose = require("mongoose");
+
+const indexRouter = require('./routes/index.js');
+const authRouter = require('./routes/auth.js');
+const homeRouter = require('./routes/home.js');
 
 const app = express();
 dotenv.config();
 
 const port = process.env.PORT;
+
 app.use(morgan('dev'));
 
 app.set('views', path.join(__dirname, 'views'));
@@ -26,12 +33,9 @@ app.use(session({
     saveUninitialized: true
 }));
 
-const indexRouter = require('./routes/index.js');
-const authRouter = require('./routes/auth.js');
-
 app.use('/', indexRouter);
 app.use('/auth', authRouter);
-
+app.use('/home', homeRouter);
 
 // server start
 if (process.env.CI) {
@@ -58,3 +62,4 @@ async function connectToMongoDB() {
 }
 
 connectToMongoDB();
+

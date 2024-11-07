@@ -10,4 +10,4 @@ const userSchema = new mongoose.Schema({
     birthday: {type: Date, required: true}
 });
 
-module.exports = {User: mongoose.model("User", userSchema)};
+module.exports = mongoose.model("User", userSchema);
