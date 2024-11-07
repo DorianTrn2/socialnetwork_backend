@@ -1,6 +1,5 @@
 // data.js
 module.exports = {
-    data: {
         roles: [
             {role: 'Admin'},
             {role: 'Utilisateur'}
@@ -184,5 +183,4 @@ module.exports = {
             },
             // Ajoutez plus de messages ici
         ]
-    }
 };

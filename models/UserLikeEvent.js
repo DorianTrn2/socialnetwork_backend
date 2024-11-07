@@ -5,4 +5,4 @@ const userLikeEventSchema = new mongoose.Schema({
     event_id: {type: mongoose.Schema.Types.ObjectId, required: true}
 });
 
-module.exports = {UserLikeEvent: mongoose.model("UserLikeEvent", userLikeEventSchema)};
+module.exports = mongoose.model("UserLikeEvent", userLikeEventSchema);

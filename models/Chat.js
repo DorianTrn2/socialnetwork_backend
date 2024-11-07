@@ -5,4 +5,4 @@ const chatSchema = new mongoose.Schema({
     user_email2: {type: String, required: true}
 });
 
-module.exports = {Chat: mongoose.model("Chat", chatSchema)};
+module.exports = mongoose.model("Chat", chatSchema);
