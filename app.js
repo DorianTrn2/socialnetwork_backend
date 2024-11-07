@@ -11,6 +11,7 @@ const indexRouter = require('./routes/index.js');
 const authRouter = require('./routes/auth.js');
 const homeRouter = require('./routes/event.js');
 const userRouter = require('./routes/user.js');
+const chatRouter = require('./routes/chat.js');
 const {verifyToken, verifyAdminToken} = require("./middleware/authMiddleware");
 
 const app = express();
@@ -36,6 +37,7 @@ app.use('/', indexRouter);
 app.use('/auth', authRouter);
 app.use('/event', homeRouter);
 app.use('/user', verifyToken, userRouter); // Must be authenticated to be there
+app.use('/chat', verifyToken, chatRouter); // Must be authenticated to be there
 
 // server start
 if (process.env.CI) {

@@ -58,6 +58,24 @@ module.exports = {
             lastname: 'Roux',
             birthday: new Date('1993-08-22')
         },
+        {
+            email: 'dorian@tarin.com',
+            password_hash: '$2b$10$qMNmU2B8ntspiIFejFVMq.w5UpNdITNcXUpAzNwbYx45lwtPjY2eW',
+            username: 'DorianLeGoat',
+            role_id: '695849930838',
+            firstname: 'Dorian',
+            lastname: 'Tarin',
+            birthday: new Date('2002-01-01')
+        },
+        {
+            email: 'valentin@herve.com',
+            password_hash: '$2b$10$qMNmU2B8ntspiIFejFVMq.w5UpNdITNcXUpAzNwbYx45lwtPjY2eW',
+            username: 'ValoAdmin',
+            role_id: '142977898717',
+            firstname: 'Valentin',
+            lastname: 'Hervé',
+            birthday: new Date('2003-01-01')
+        },
     ],
     themes: [
         {theme: 'Sport', code: 'SPORT'},
@@ -176,6 +194,48 @@ module.exports = {
             chat_users: ['emma@example.com', 'francois@example.com'],
             content: 'Bien sûr, je vais préparer ma spécialité !',
             date: new Date('2023-11-15')
+        },
+        {
+            sender_email: 'francois@example.com',
+            chat_users: ['alice@example.com', 'francois@example.com'],
+            content: 'Salut Alice ! Comment va en ce beau matin ?',
+            date: new Date('2023-11-15')
+        },
+        {
+            sender_email: 'valentin@herve.com',
+            chat_users: ['valentin@herve.com', 'dorian@tarin.com'],
+            content: 'Salut Dorian ! Comment va en ce beau matin ?',
+            date: new Date('2023-11-15T15:03:22Z')
+        },
+        {
+            sender_email: 'dorian@tarin.com',
+            chat_users: ['valentin@herve.com', 'dorian@tarin.com'],
+            content: 'Ca va, ça va, et toi ?',
+            date: new Date('2023-11-15T15:04:22Z')
+        },
+        {
+            sender_email: 'valentin@herve.com',
+            chat_users: ['valentin@herve.com', 'dorian@tarin.com'],
+            content: 'Tranquillou, même si ce lever à 14h du matin est un pur challenge',
+            date: new Date('2023-11-15T15:05:22Z')
+        },
+        {
+            sender_email: 'dorian@tarin.com',
+            chat_users: ['valentin@herve.com', 'dorian@tarin.com'],
+            content: 'kmthgy,fledsgcnockturdlhmgclitpu gehouhg,c; eshgejschgnv er',
+            date: new Date('2023-11-15T15:07:22Z')
+        },
+        {
+            sender_email: 'valentin@herve.com',
+            chat_users: ['valentin@herve.com', 'alice@example.com'],
+            content: 'Hi !',
+            date: new Date('2023-11-15T15:07:22Z')
+        },
+        {
+            sender_email: 'valentin@herve.com',
+            chat_users: ['francois@example.com', 'valentin@herve.com'],
+            content: 'Hi !',
+            date: new Date('2023-11-15T15:07:22Z')
         },
     ]
 };
