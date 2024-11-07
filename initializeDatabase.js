@@ -1,6 +1,4 @@
 const mongoose = require('mongoose');
-const constants = require("./constant");
-
 const User = require("./models/User");
 const UserRole = require("./models/UserRole");
 const Event = require("./models/Event");
