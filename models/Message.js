@@ -7,4 +7,4 @@ const messageSchema = new mongoose.Schema({
     message: {type: String, required: true}
 });
 
-module.exports = {Message: mongoose.model("Message", messageSchema)};
+module.exports = mongoose.model("Message", messageSchema);

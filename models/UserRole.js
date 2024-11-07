@@ -4,4 +4,4 @@ const userRoleSchema = new mongoose.Schema({
     role: {type: String, required: true}
 });
 
-module.exports = {UserRole: mongoose.model("UserRole", userRoleSchema)};
+module.exports = mongoose.model("UserRole", userRoleSchema);
