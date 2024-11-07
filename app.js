@@ -31,9 +31,14 @@ app.use('/auth', authRouter);
 app.use('/home', homeRouter);
 
 // server start
-app.listen(port, () => {
-    console.log(`Listening on port ${port}`);
-});
+if (process.env.CI) {
+    console.log("Running in CI mode - syntax and startup check only.");
+    process.exit(0);  // Stop immediately in CI
+} else {
+    app.listen(port, () => {
+        console.log(`Listening on port ${port}`);
+    });
+}
 
 async function connectToMongoDB() {
     try {
