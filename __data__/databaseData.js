@@ -1,6 +1,6 @@
 module.exports = {
     roles: [
-        {role: 'Admin', id: '042977898717'},
+        {role: 'Admin', id: '142977898717'},
         {role: 'Utilisateur', id: '695849930838'}
     ],
     users: [
@@ -136,7 +136,7 @@ module.exports = {
         {user_email: 'charles@example.com', event_name: 'Tournoi de tennis'},
         {user_email: 'diane@example.com', event_name: 'Fête de Noël'},
         {user_email: 'emma@example.com', event_name: 'Atelier de cuisine'},
-        {user_email: 'emma@example.com', event_name: 'Cours de yoga'},
+        {user_email: 'emma@example.com', event_name: 'Cours de yoda'},
         {user_email: 'francois@example.com', event_name: 'Match de Football'},
         {user_email: 'francois@example.com', event_name: 'Projection de film'},
     ],

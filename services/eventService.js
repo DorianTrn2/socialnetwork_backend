@@ -32,7 +32,7 @@ async function addEvent(event) {
 async function updateEvent(event, event_id) {
     return Event.updateOne({_id: event_id}, {
         name: event.name,
-        theme_id: event.theme_id,
+        theme_code: event.theme_code,
         date: event.date,
         created_by_email: event.created_by_email,
     });
