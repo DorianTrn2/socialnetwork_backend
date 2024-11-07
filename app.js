@@ -1,17 +1,19 @@
 // modules
 const morgan = require('morgan');
 const express = require('express');
+const mongoose = require('mongoose');
+const dotenv = require('dotenv');
 const path = require('path');
 const session = require("express-session");
-const constants = require("./constant");
-const mongoose = require("mongoose");
 
 const indexRouter = require('./routes/index.js');
 const authRouter = require('./routes/auth.js');
 const homeRouter = require('./routes/home.js');
 
 const app = express();
-const port = 3001;
+dotenv.config();
+
+const port = process.env.PORT;
 
 app.use(morgan('dev'));
 
@@ -19,6 +21,7 @@ app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'pug');
 app.use(morgan('dev'));
 app.use(express.urlencoded({ extended: true }))
+app.use(express.json());
 
 app.use(session({
     secret: 'top secret',
@@ -42,7 +45,7 @@ if (process.env.CI) {
 
 async function connectToMongoDB() {
     try {
-        await mongoose.connect(`${constants.DATABASE_URL}/${constants.DATABASE_NAME}`, {
+        await mongoose.connect(`${process.env.DATABASE_URL}/${process.env.DATABASE_NAME}`, {
             useNewUrlParser: true,
             useUnifiedTopology: true,
             serverSelectionTimeoutMS: 30000
@@ -55,3 +58,4 @@ async function connectToMongoDB() {
 }
 
 connectToMongoDB();
+
