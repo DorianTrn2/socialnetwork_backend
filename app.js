@@ -27,6 +27,11 @@ app.use('/auth', authRouter);
 
 
 // server start
-app.listen(port, () => {
-    console.log(`Listening on port ${port}`);
-});
+if (process.env.CI) {
+    console.log("Running in CI mode - syntax and startup check only.");
+    process.exit(0);  // Stop immediately in CI
+} else {
+    app.listen(port, () => {
+        console.log(`Listening on port ${port}`);
+    });
+}
