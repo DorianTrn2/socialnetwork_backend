@@ -1,4 +1,5 @@
 const eventService = require("../services/eventService")
+const Event = require("../models/Event")
 
 function getEventsFilters(creator_email = null, date = null, name = null) {
     const filter = {}
@@ -67,7 +68,34 @@ async function getEventById(req, res) {
     }
 }
 
+async function addEvent(req, res) {
+    try {
+        const { created_by_email, theme_id, name, date } = req.body;
+
+        const eventToAdd = new Event({
+            created_by_email,
+            theme_id,
+            name,
+            date
+        });
+
+        console.log(eventToAdd)
+
+        const event = await eventService.addEvent(eventToAdd);
+
+        if (event === null) {
+            return res.status(404).json({ message: 'Error - received object is null => not inserted' });
+        }
+
+        res.status(201).json(event);
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ message: 'Internal server error' });
+    }
+}
+
 module.exports = {
     getAllEvents,
     getEventById,
+    addEvent,
 }
