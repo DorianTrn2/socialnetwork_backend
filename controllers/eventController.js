@@ -1,4 +1,5 @@
 const eventService = require("../services/eventService")
+const Event = require("../models/Event")
 
 function getEventsFilters(creator_email = null, date = null, name = null) {
     const filter = {}
@@ -10,45 +11,140 @@ function getEventsFilters(creator_email = null, date = null, name = null) {
         filter["date"] = date;
     }
     if (name) {
-        filter["name"] = { "$regex": name, "$options": "i" };
+        filter["name"] = {"$regex": name, "$options": "i"};
     }
-
-    console.log(filter)
 
     return filter;
 }
 
-async function getAllEvents(res, creator_email = null, date = null, name = null) {
+async function getAllEvents(req, res) {
     try {
-        const filter = getEventsFilters(creator_email, date, name);
+        const {
+            sort_by_date, // 1 -> ascending order, -1 -> descending order, 0 / null -> no sort
+            creator_email,
+            date,
+            name
+        } = req.query;
 
-        const events = await eventService.getAllEvents(filter);
-        if (events === null) {
-            return res.status(404).json({ message: 'Error - received object is null' });
+        const filter = getEventsFilters(creator_email, date, name);
+        let events;
+
+        if (sort_by_date === '1' || sort_by_date === '-1') {
+            events = await eventService.getAllSortedEvents(sort_by_date, filter);
+        } else {
+            events = await eventService.getAllEvents(filter);
         }
+
+        if (events === null) {
+            return res.status(404).json({message: 'Error - received object is null'});
+        }
+
         res.status(200).json(events);
     } catch (error) {
         console.error(error);
-        res.status(500).json({ message: 'Internal server error' });
+        res.status(500).json({message: 'Internal server error'});
     }
 }
 
-async function getAllSortedEvents(res, sort_by_date, creator_email = null, date = null, name = null) {
+async function getEventById(req, res) {
     try {
-        const filter = getEventsFilters(creator_email, date, name);
+        const {event_id} = req.params;
 
-        const events = await eventService.getAllSortedEvents(sort_by_date, filter);
-        if (events === null) {
-            return res.status(404).json({ message: 'Error - received object is null' });
+        if (!event_id) {
+            return res.status(404).json({message: 'Error - parameter event_id is undefined'});
         }
-        res.status(200).json(events);
+
+        const event = await eventService.getEventById(event_id);
+
+        if (event === null) {
+            return res.status(404).json({message: 'Error - received object is null'});
+        }
+
+        res.status(200).json(event);
     } catch (error) {
         console.error(error);
-        res.status(500).json({ message: 'Internal server error' });
+        res.status(500).json({message: 'Internal server error'});
+    }
+}
+
+async function addEvent(req, res) {
+    try {
+        const {created_by_email, theme_id, name, date} = req.body;
+
+        const eventToAdd = new Event({
+            created_by_email,
+            theme_id,
+            name,
+            date
+        });
+
+        const event = await eventService.addEvent(eventToAdd);
+
+        if (event === null) {
+            return res.status(404).json({message: 'Error - received object is null => not inserted'});
+        }
+
+        res.status(201).json(event);
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({message: 'Internal server error'});
+    }
+}
+
+async function updateEvent(req, res) {
+    try {
+        const {created_by_email, theme_id, name, date} = req.body;
+        const {event_id} = req.params;
+
+        if (!event_id) {
+            return res.status(404).json({message: 'Error - parameter event_id is undefined'});
+        }
+
+        const event = new Event({
+            created_by_email,
+            theme_id,
+            name,
+            date
+        });
+
+        const updatedEvent = await eventService.updateEvent(event, event_id);
+
+        if (updatedEvent === null) {
+            return res.status(404).json({message: 'Error - received object is null => not updated'});
+        }
+
+        res.status(201).json(updatedEvent);
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({message: 'Internal server error'});
+    }
+}
+
+async function deleteEvent(req, res) {
+    try {
+        const {event_id} = req.params;
+
+        if (!event_id) {
+            return res.status(404).json({message: 'Error - parameter event_id is undefined'});
+        }
+
+        const updatedEvent = await eventService.deleteEvent(event_id);
+
+        if (updatedEvent === null) {
+            return res.status(404).json({message: 'Error - received object is null => not updated'});
+        }
+
+        res.status(201).json(updatedEvent);
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({message: 'Internal server error'});
     }
 }
 
 module.exports = {
     getAllEvents,
-    getAllSortedEvents,
+    getEventById,
+    addEvent,
+    updateEvent,
+    deleteEvent,
 }

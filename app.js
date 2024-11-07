@@ -9,7 +9,7 @@ const cookieParser = require('cookie-parser');
 
 const indexRouter = require('./routes/index.js');
 const authRouter = require('./routes/auth.js');
-const homeRouter = require('./routes/home.js');
+const homeRouter = require('./routes/event.js');
 
 const app = express();
 dotenv.config();
@@ -33,7 +33,7 @@ app.use(session({
 
 app.use('/', indexRouter);
 app.use('/auth', authRouter);
-app.use('/home', homeRouter);
+app.use('/event', homeRouter);
 
 // server start
 if (process.env.CI) {
