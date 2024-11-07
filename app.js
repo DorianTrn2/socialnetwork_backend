@@ -3,12 +3,8 @@ const morgan = require('morgan');
 const express = require('express');
 const mongoose = require('mongoose');
 const dotenv = require('dotenv');
-
-
 const path = require('path');
 const session = require("express-session");
-const constants = require("./constant");
-const mongoose = require("mongoose");
 
 const indexRouter = require('./routes/index.js');
 const authRouter = require('./routes/auth.js');
