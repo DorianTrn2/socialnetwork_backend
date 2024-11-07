@@ -7,12 +7,11 @@ const path = require('path');
 const session = require("express-session");
 const cookieParser = require('cookie-parser');
 
-const verifyToken = require("./middleware/authMiddleware")
-
 const indexRouter = require('./routes/index.js');
 const authRouter = require('./routes/auth.js');
 const homeRouter = require('./routes/event.js');
 const userRouter = require('./routes/user.js');
+const {verifyToken, verifyAdminToken} = require("./middleware/authMiddleware");
 
 const app = express();
 dotenv.config();

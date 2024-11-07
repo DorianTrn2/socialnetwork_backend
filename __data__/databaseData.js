@@ -6,18 +6,18 @@ module.exports = {
     users: [
         {
             email: 'alice@example.com',
-            password_hash: 'hash1',
+            password_hash: '$2b$10$qMNmU2B8ntspiIFejFVMq.w5UpNdITNcXUpAzNwbYx45lwtPjY2eW',
             username: 'alice',
-            role_id: '042977898717',
+            role_id: '695849930838',
             firstname: 'Alice',
             lastname: 'Dupont',
             birthday: new Date('1985-06-15')
         },
         {
             email: 'bob@example.com',
-            password_hash: 'hash2',
+            password_hash: '$2b$10$qMNmU2B8ntspiIFejFVMq.w5UpNdITNcXUpAzNwbYx45lwtPjY2eW',
             username: 'bob',
-            role_id: '695849930838',
+            role_id: '142977898717',
             firstname: 'Bob',
             lastname: 'Martin',
             birthday: new Date('1988-09-23')
@@ -26,7 +26,7 @@ module.exports = {
             email: 'charles@example.com',
             password_hash: 'hash3',
             username: 'charles',
-            role_id: '042977898717',
+            role_id: '695849930838',
             firstname: 'Charles',
             lastname: 'Durand',
             birthday: new Date('1991-11-20')
@@ -35,7 +35,7 @@ module.exports = {
             email: 'diane@example.com',
             password_hash: 'hash4',
             username: 'diane',
-            role_id: '042977898717',
+            role_id: '695849930838',
             firstname: 'Diane',
             lastname: 'Leroy',
             birthday: new Date('1995-02-14')
@@ -44,7 +44,7 @@ module.exports = {
             email: 'emma@example.com',
             password_hash: 'hash5',
             username: 'emma',
-            role_id: '042977898717',
+            role_id: '695849930838',
             firstname: 'Emma',
             lastname: 'Petit',
             birthday: new Date('2000-05-30')
@@ -53,7 +53,7 @@ module.exports = {
             email: 'francois@example.com',
             password_hash: 'hash6',
             username: 'francois',
-            role_id: '042977898717',
+            role_id: '695849930838',
             firstname: 'François',
             lastname: 'Roux',
             birthday: new Date('1993-08-22')

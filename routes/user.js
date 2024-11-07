@@ -4,4 +4,4 @@ const eventController = require("../controllers/eventController");
 
 router.get('', eventController.getAllEvents);
 
-router.use('/chat')
+module.exports = router;

@@ -1,4 +1,5 @@
 const jwt = require('jsonwebtoken');
+const constant = require('../constant')
 
 function verifyToken(req, res, next) {
     const token = req.cookies.token;
@@ -21,6 +22,10 @@ function verifyAdminToken(req, res, next) {
     }
     try {
         const decoded = jwt.verify(token, process.env.JWT_SECRET);
+        if (!decoded.userRole || `${decoded.userRole}` !== constant.ADMIN_ROLE_ID) {
+            return res.status(401).json({error: 'Access denied'});
+        }
+
         req.userId = decoded.userId;
         next();
     } catch (error) {
@@ -28,4 +33,4 @@ function verifyAdminToken(req, res, next) {
     }
 }
 
-module.exports = verifyToken;
+module.exports = {verifyToken, verifyAdminToken};
