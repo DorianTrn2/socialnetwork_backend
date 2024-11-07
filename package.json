@@ -17,6 +17,7 @@
     "pug": "^3.0.2",
     "mongoose": "^5.13.22",
     "jsonwebtoken": "^9.0.2",
-    "bcrypt": "^5.1.1"
+    "bcrypt": "^5.1.1",
+    "dotenv": "^16.4.5"
   }
 }
