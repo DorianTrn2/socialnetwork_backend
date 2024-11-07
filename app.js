@@ -5,6 +5,7 @@ const mongoose = require('mongoose');
 const dotenv = require('dotenv');
 const path = require('path');
 const session = require("express-session");
+const cookieParser = require('cookie-parser');
 
 const indexRouter = require('./routes/index.js');
 const authRouter = require('./routes/auth.js');
@@ -22,6 +23,7 @@ app.set('view engine', 'pug');
 app.use(morgan('dev'));
 app.use(express.urlencoded({ extended: true }))
 app.use(express.json());
+app.use(cookieParser());
 
 app.use(session({
     secret: 'top secret',
