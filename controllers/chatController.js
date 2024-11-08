@@ -1,4 +1,5 @@
 const chatService = require("../services/chatService")
+const messageService = require("../services/messageService")
 
 async function getAllChats(req, res) {
     try {
@@ -50,7 +51,18 @@ async function getChatById(req, res) {
             return res.status(404).json({message: 'Error - received object is null'});
         }
 
-        res.status(200).json(chat);
+        const messages = await messageService.getAllMessagesByChatId(chat_id);
+
+        if (messages === null) {
+            return res.status(404).json({message: 'Error - received object is null'});
+        }
+
+        res.status(200).json({
+            _id: chat._id,
+            user_email1: chat.user_email1,
+            user_email2: chat.user_email2,
+            messages
+        });
     } catch (error) {
         console.error(error);
         res.status(500).json({message: 'Internal server error'});
