@@ -58,6 +58,24 @@ module.exports = {
             lastname: 'Roux',
             birthday: new Date('1993-08-22')
         },
+        {
+            email: 'dorian@tarin.com',
+            password_hash: '$2b$10$qMNmU2B8ntspiIFejFVMq.w5UpNdITNcXUpAzNwbYx45lwtPjY2eW',
+            username: 'DorianLeGoat',
+            role_id: '695849930838',
+            firstname: 'Dorian',
+            lastname: 'Tarin',
+            birthday: new Date('2002-01-01')
+        },
+        {
+            email: 'valentin@herve.com',
+            password_hash: '$2b$10$qMNmU2B8ntspiIFejFVMq.w5UpNdITNcXUpAzNwbYx45lwtPjY2eW',
+            username: 'ValoAdmin',
+            role_id: '142977898717',
+            firstname: 'Valentin',
+            lastname: 'Hervé',
+            birthday: new Date('2003-01-01')
+        },
     ],
     themes: [
         {theme: 'Sport', code: 'SPORT'},
@@ -71,61 +89,71 @@ module.exports = {
             created_by_email: 'alice@example.com',
             theme_code: 'SPORT',
             name: 'Match de Football',
-            date: new Date('2023-12-10')
+            date: new Date('2023-12-10'),
+            price: 20
         },
         {
             created_by_email: 'bob@example.com',
             theme_code: 'CULTURE',
             name: 'Exposition d\'art moderne',
-            date: new Date('2023-11-15')
+            date: new Date('2023-11-15'),
+            price: 21
         },
         {
             created_by_email: 'charles@example.com',
             theme_code: 'FESTIF',
             name: 'Soirée Années 80',
-            date: new Date('2024-01-20')
+            date: new Date('2024-01-20'),
+            price: 22
         },
         {
             created_by_email: 'diane@example.com',
             theme_code: 'PROFESSIONNEL',
             name: 'Conférence sur l\'IA',
-            date: new Date('2024-02-15')
+            date: new Date('2024-02-15'),
+            price: 23
         },
         {
             created_by_email: 'emma@example.com',
             theme_code: 'AUTRE',
             name: 'Atelier de cuisine',
-            date: new Date('2023-12-05')
+            date: new Date('2023-12-05'),
+            price: 24
         },
         {
             created_by_email: 'francois@example.com',
             theme_code: 'SPORT',
             name: 'Tournoi de tennis',
-            date: new Date('2023-11-30')
+            date: new Date('2023-11-30'),
+            price: 25
         },
         {
             created_by_email: 'alice@example.com',
             theme_code: 'CULTURE',
             name: 'Projection de film',
-            date: new Date('2023-12-20')
+            date: new Date('2023-12-20'),
+            price: 26
         },
         {
             created_by_email: 'bob@example.com',
             theme_code: 'FESTIF',
             name: 'Fête de Noël',
-            date: new Date('2023-12-24')
+            date: new Date('2023-12-24'),
+            price: 27
         },
         {
             created_by_email: 'charles@example.com',
             theme_code: 'PROFESSIONNEL',
             name: 'Networking IT',
-            date: new Date('2024-03-10')
+            date: new Date('2024-03-10'),
+            price: 28
         },
         {
             created_by_email: 'diane@example.com',
             theme_code: 'AUTRE',
             name: 'Cours de yoda',
-            date: new Date('2024-01-25')
+            date: new Date('2024-01-25'),
+            price: 29
         },
     ],
     userLikes: [
@@ -176,6 +204,48 @@ module.exports = {
             chat_users: ['emma@example.com', 'francois@example.com'],
             content: 'Bien sûr, je vais préparer ma spécialité !',
             date: new Date('2023-11-15')
+        },
+        {
+            sender_email: 'francois@example.com',
+            chat_users: ['alice@example.com', 'francois@example.com'],
+            content: 'Salut Alice ! Comment va en ce beau matin ?',
+            date: new Date('2023-11-15')
+        },
+        {
+            sender_email: 'valentin@herve.com',
+            chat_users: ['valentin@herve.com', 'dorian@tarin.com'],
+            content: 'Salut Dorian ! Comment va en ce beau matin ?',
+            date: new Date('2023-11-15T15:03:22Z')
+        },
+        {
+            sender_email: 'dorian@tarin.com',
+            chat_users: ['valentin@herve.com', 'dorian@tarin.com'],
+            content: 'Ca va, ça va, et toi ?',
+            date: new Date('2023-11-15T15:04:22Z')
+        },
+        {
+            sender_email: 'valentin@herve.com',
+            chat_users: ['valentin@herve.com', 'dorian@tarin.com'],
+            content: 'Tranquillou, même si ce lever à 14h du matin est un pur challenge',
+            date: new Date('2023-11-15T15:05:22Z')
+        },
+        {
+            sender_email: 'dorian@tarin.com',
+            chat_users: ['valentin@herve.com', 'dorian@tarin.com'],
+            content: 'kmthgy,fledsgcnockturdlhmgclitpu gehouhg,c; eshgejschgnv er',
+            date: new Date('2023-11-15T15:07:22Z')
+        },
+        {
+            sender_email: 'valentin@herve.com',
+            chat_users: ['valentin@herve.com', 'alice@example.com'],
+            content: 'Hi !',
+            date: new Date('2023-11-15T15:07:22Z')
+        },
+        {
+            sender_email: 'valentin@herve.com',
+            chat_users: ['francois@example.com', 'valentin@herve.com'],
+            content: 'Hi !',
+            date: new Date('2023-11-15T15:07:22Z')
         },
     ]
 };
