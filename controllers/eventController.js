@@ -31,6 +31,7 @@ async function getAllEvents(req, res) {
     try {
         const {
             sort_by_date, // 1 -> ascending order, -1 -> descending order, 0 / null -> no sort
+            sort_by_price, // 1 -> ascending order, -1 -> descending order, 0 / null -> no sort
             creator_email,
             date,
             name,
@@ -42,7 +43,9 @@ async function getAllEvents(req, res) {
         let events;
 
         if (sort_by_date === '1' || sort_by_date === '-1') {
-            events = await eventService.getAllSortedEvents(sort_by_date, filter);
+            events = await eventService.getAllSortedEvents(sort_by_date, filter, true);
+        } else if (sort_by_price === '1' || sort_by_price === '-1') {
+            events = await eventService.getAllSortedEvents(sort_by_price, filter, false);
         } else {
             events = await eventService.getAllEvents(filter);
         }
