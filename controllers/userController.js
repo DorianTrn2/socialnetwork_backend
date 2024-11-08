@@ -1,5 +1,6 @@
 const userService = require("../services/userService");
 const eventService = require("../services/eventService");
+const userlikeeventService = require("../services/userlikeeventService");
 
 async function getAllUsers(req, res) {
     try{
@@ -46,18 +47,19 @@ async function myProfile(req, res) {
         email = req.userEmail;
         const user = await userService.getUserByEmail(email);
         
-        const likedevents_obj = await userService.getLikedEvents(email);
+        const likedevents_obj = await userlikeeventService.getLikedEvents(email);
         let likedevents_ids = [];
         for(let i = 0; i < likedevents_obj.length; i++){
             likedevents_ids.push(likedevents_obj[i].event_id);
         }
-
         let likedevents = [];
         for(let i = 0; i < likedevents_ids.length; i++){
             likedevents.push(await eventService.getEventById(likedevents_ids[i]));
         }
         
-        res.status(200).json({user: user, likedevents: likedevents});
+        let createdEvents = await eventService.getAllEvents({created_by_email: email});
+
+        res.status(200).json({user: user, likedevents: likedevents, createdEvents: createdEvents});
     }catch(error){
         res.status(500).json({ error: 'Failed to retrieve user' });
     }

@@ -1,5 +1,4 @@
 const User = require("../models/User");
-const UserLikeEvent = require("../models/UserLikeEvent");
 
 async function getAllUsers(filter = {}) {
     return User.find(filter).exec();
@@ -25,15 +24,10 @@ async function updateUser(user, user_email) {
     });
 }
 
-async function getLikedEvents(user_mail) {
-    return UserLikeEvent.find({user_email: user_mail}).exec();
-}
-
 
 module.exports = {
     getAllUsers,
     getUserByEmail,
     getUserByUsername,
-    updateUser,
-    getLikedEvents
+    updateUser
 }; 
