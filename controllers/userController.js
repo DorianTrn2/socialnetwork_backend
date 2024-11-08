@@ -57,7 +57,9 @@ async function myProfile(req, res) {
             likedevents.push(await eventService.getEventById(likedevents_ids[i]));
         }
         
-        res.status(200).json({user: user, likedevents: likedevents});
+        let createdEvents = await eventService.getAllEvents({created_by_email: email});
+
+        res.status(200).json({user: user, likedevents: likedevents, createdEvents: createdEvents});
     }catch(error){
         res.status(500).json({ error: 'Failed to retrieve user' });
     }
