@@ -1,5 +1,6 @@
 const chatService = require("../services/chatService")
 const messageService = require("../services/messageService")
+const userService = require("../services/userService");
 
 async function getAllChats(req, res) {
     try {
@@ -7,6 +8,17 @@ async function getAllChats(req, res) {
 
         if (chats === null) {
             return res.status(404).json({message: 'Error - received object is null'});
+        }
+
+        // Append users to chat
+        for (let i = 0; i < chats.length; i++) {
+            chats[i] = {
+                _id: chats[i]._id,
+                user_email1: chats[i].user_email1,
+                user_email2: chats[i].user_email2,
+                user1: await userService.getUserByEmail(chats[i].user_email1),
+                user2: await userService.getUserByEmail(chats[i].user_email2),
+            };
         }
 
         res.status(200).json(chats);
@@ -28,6 +40,17 @@ async function getAllChatsOfUser(req, res) {
 
         if (chats === null) {
             return res.status(404).json({message: 'Error - received object is null'});
+        }
+
+        // Append users to chat
+        for (let i = 0; i < chats.length; i++) {
+            chats[i] = {
+                _id: chats[i]._id,
+                user_email1: chats[i].user_email1,
+                user_email2: chats[i].user_email2,
+                user1: await userService.getUserByEmail(chats[i].user_email1),
+                user2: await userService.getUserByEmail(chats[i].user_email2),
+            };
         }
 
         res.status(200).json(chats);
@@ -61,6 +84,8 @@ async function getChatById(req, res) {
             _id: chat._id,
             user_email1: chat.user_email1,
             user_email2: chat.user_email2,
+            user1: await userService.getUserByEmail(chat.user_email1),
+            user2: await userService.getUserByEmail(chat.user_email2),
             messages
         });
     } catch (error) {
