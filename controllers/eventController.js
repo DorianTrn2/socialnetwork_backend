@@ -1,5 +1,7 @@
 const eventService = require("../services/eventService")
 const Event = require("../models/Event")
+const path = require('path');
+const fs = require('fs');
 
 function getEventsFilters(creator_email = null, date = null, name = null, price_min = null, price_max = null) {
     const filter = {}
@@ -155,10 +157,43 @@ async function deleteEvent(req, res) {
     }
 }
 
+async function uploadEventImage(req, res) {
+    try{
+        res.status(200).json({ message: 'Image sent successfully' });
+    }
+    catch(error){
+        
+        res.status(500).json({ error: 'Failed sending image' });
+    }
+}
+
+async function getImage(req, res) {
+    try{
+        const event_id = req.params.event_id;
+
+        const eventDir = path.join(__dirname, `../public/event`);
+        const defaultPicture = path.join(eventDir, 'default.png');
+
+        const eventPicture = fs.readdirSync(eventDir).find(file => file.startsWith(event_id + '.'));
+
+        if (eventPicture) {
+            res.status(200).sendFile(path.join(eventDir, eventPicture));
+        } else {
+            res.status(200).sendFile(defaultPicture);
+        }
+                
+    }catch(error){
+        console.log(error)
+        res.status(500).json({ error: 'Failed to retrieve event' });
+    }
+}
+
 module.exports = {
     getAllEvents,
     getEventById,
     addEvent,
     updateEvent,
     deleteEvent,
+    uploadEventImage,
+    getImage
 }
