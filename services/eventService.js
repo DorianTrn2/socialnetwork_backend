@@ -48,6 +48,10 @@ async function deleteEvent(event_id) {
     return Event.deleteOne({_id: event_id});
 }
 
+async function getEventCreatedBy(email) {
+    return Event.find({created_by_email: email}).exec();
+}
+
 module.exports = {
     getAllEvents,
     getAllSortedEvents,
