@@ -43,7 +43,7 @@ async function updateUser(req, res) {
 
 async function myProfile(req, res) {
     try{
-        email = req.userMail;
+        email = req.userEmail;
         const user = await userService.getUserByEmail(email);
         
         const likedevents_obj = await userService.getLikedEvents(email);
