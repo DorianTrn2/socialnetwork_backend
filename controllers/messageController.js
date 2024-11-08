@@ -1,4 +1,4 @@
-const messageService = require("../services/messageService")
+const messageService = require("../services/messageService");
 const Message = require("../models/Message");
 
 async function getAllMessages(req, res) {
@@ -18,12 +18,12 @@ async function getAllMessages(req, res) {
 
 async function addMessage(req, res) {
     try {
-        const {date, message} = req.body;
+        const {message} = req.body;
         const {chat_id, userEmail} = req;
 
         const messageToAdd = new Message({
             sender_email: userEmail,
-            date,
+            date: new Date(),
             chat_id,
             message
         });
@@ -33,6 +33,8 @@ async function addMessage(req, res) {
         if (newMessage === null) {
             return res.status(404).json({message: 'Error - received object is null => not inserted'});
         }
+
+        req.io.emit("new_message", newMessage);
 
         res.status(201).json(newMessage);
     } catch (error) {
