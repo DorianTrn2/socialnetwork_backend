@@ -67,6 +67,10 @@ if (process.env.CI) {
 // TODO remove (debug)
 io.on('connection', (socket) => {
     console.log(`New connection. Socket id : ${socket.id}`);
+
+    socket.on("join_room", (room) => {
+        socket.join(room);
+    });
 });
 
 async function connectToMongoDB() {

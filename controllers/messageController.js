@@ -34,7 +34,7 @@ async function addMessage(req, res) {
             return res.status(404).json({message: 'Error - received object is null => not inserted'});
         }
 
-        req.io.emit("new_message", newMessage);
+        req.io.to(chat_id).emit("new_message", newMessage);
 
         res.status(201).json(newMessage);
     } catch (error) {

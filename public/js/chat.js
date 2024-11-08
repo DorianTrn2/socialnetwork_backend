@@ -4,13 +4,12 @@ const chatId = document.getElementById("chatId").innerText;
 const userEmail = document.getElementById("userEmail").innerText;
 
 let socket;
-let room;
+let chatData;
 
 function connectToWebsocket() {
     socket = io("http://localhost:3001");
 
-
-// socket.emit("room", room);
+    socket.emit("join_room", chatData._id); // Join the room with the chat id
 
     socket.on("connect", () => {
         console.log(`Connected to server as ${userEmail}. Socket id : ${socket.id}`);
@@ -40,6 +39,7 @@ fetch(`/chat/${chatId}`)
         return response.json();
     })
     .then((data) => {
+        chatData = data;
         loadMessagesHistory(data.messages)
         connectToWebsocket();
     })
