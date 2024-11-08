@@ -1,7 +1,7 @@
 const eventService = require("../services/eventService")
 const Event = require("../models/Event")
 
-function getEventsFilters(creator_email = null, date = null, name = null) {
+function getEventsFilters(creator_email = null, date = null, name = null, price_min = null, price_max = null) {
     const filter = {}
 
     if (creator_email) {
@@ -13,6 +13,16 @@ function getEventsFilters(creator_email = null, date = null, name = null) {
     if (name) {
         filter["name"] = {"$regex": name, "$options": "i"};
     }
+    if (price_min) {
+        filter["price"] = {"$gte": price_min};
+    }
+    if (price_max) {
+        if (filter.price) {
+            filter["price"]["$lte"] = price_max;
+        } else {
+            filter["price"] = {"$lte": price_max};
+        }
+    }
 
     return filter;
 }
@@ -23,10 +33,12 @@ async function getAllEvents(req, res) {
             sort_by_date, // 1 -> ascending order, -1 -> descending order, 0 / null -> no sort
             creator_email,
             date,
-            name
+            name,
+            price_min,
+            price_max,
         } = req.query;
 
-        const filter = getEventsFilters(creator_email, date, name);
+        const filter = getEventsFilters(creator_email, date, name, price_min, price_max);
         let events;
 
         if (sort_by_date === '1' || sort_by_date === '-1') {
@@ -69,13 +81,14 @@ async function getEventById(req, res) {
 
 async function addEvent(req, res) {
     try {
-        const {created_by_email, theme_code, name, date} = req.body;
+        const {created_by_email, theme_code, name, date, price} = req.body;
 
         const eventToAdd = new Event({
             created_by_email,
             theme_code,
             name,
-            date
+            date,
+            price
         });
 
         const event = await eventService.addEvent(eventToAdd);
@@ -93,7 +106,7 @@ async function addEvent(req, res) {
 
 async function updateEvent(req, res) {
     try {
-        const {created_by_email, theme_code, name, date} = req.body;
+        const {created_by_email, theme_code, name, date, price} = req.body;
         const {event_id} = req.params;
 
         if (!event_id) {
@@ -104,7 +117,8 @@ async function updateEvent(req, res) {
             created_by_email,
             theme_code,
             name,
-            date
+            date,
+            price
         });
 
         const result = await eventService.updateEvent(event, event_id);

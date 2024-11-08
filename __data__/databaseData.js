@@ -89,61 +89,71 @@ module.exports = {
             created_by_email: 'alice@example.com',
             theme_code: 'SPORT',
             name: 'Match de Football',
-            date: new Date('2023-12-10')
+            date: new Date('2023-12-10'),
+            price: 20
         },
         {
             created_by_email: 'bob@example.com',
             theme_code: 'CULTURE',
             name: 'Exposition d\'art moderne',
-            date: new Date('2023-11-15')
+            date: new Date('2023-11-15'),
+            price: 21
         },
         {
             created_by_email: 'charles@example.com',
             theme_code: 'FESTIF',
             name: 'Soirée Années 80',
-            date: new Date('2024-01-20')
+            date: new Date('2024-01-20'),
+            price: 22
         },
         {
             created_by_email: 'diane@example.com',
             theme_code: 'PROFESSIONNEL',
             name: 'Conférence sur l\'IA',
-            date: new Date('2024-02-15')
+            date: new Date('2024-02-15'),
+            price: 23
         },
         {
             created_by_email: 'emma@example.com',
             theme_code: 'AUTRE',
             name: 'Atelier de cuisine',
-            date: new Date('2023-12-05')
+            date: new Date('2023-12-05'),
+            price: 24
         },
         {
             created_by_email: 'francois@example.com',
             theme_code: 'SPORT',
             name: 'Tournoi de tennis',
-            date: new Date('2023-11-30')
+            date: new Date('2023-11-30'),
+            price: 25
         },
         {
             created_by_email: 'alice@example.com',
             theme_code: 'CULTURE',
             name: 'Projection de film',
-            date: new Date('2023-12-20')
+            date: new Date('2023-12-20'),
+            price: 26
         },
         {
             created_by_email: 'bob@example.com',
             theme_code: 'FESTIF',
             name: 'Fête de Noël',
-            date: new Date('2023-12-24')
+            date: new Date('2023-12-24'),
+            price: 27
         },
         {
             created_by_email: 'charles@example.com',
             theme_code: 'PROFESSIONNEL',
             name: 'Networking IT',
-            date: new Date('2024-03-10')
+            date: new Date('2024-03-10'),
+            price: 28
         },
         {
             created_by_email: 'diane@example.com',
             theme_code: 'AUTRE',
             name: 'Cours de yoda',
-            date: new Date('2024-01-25')
+            date: new Date('2024-01-25'),
+            price: 29
         },
     ],
     userLikes: [
