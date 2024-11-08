@@ -6,6 +6,7 @@ const dotenv = require('dotenv');
 const path = require('path');
 const session = require("express-session");
 const cookieParser = require('cookie-parser');
+const fs = require('fs');
 
 const indexRouter = require('./routes/index.js');
 const authRouter = require('./routes/auth.js');
@@ -17,15 +18,31 @@ const {verifyToken, verifyAdminToken} = require("./middleware/authMiddleware");
 const app = express();
 dotenv.config();
 
+const publicDir = path.join(__dirname, 'public');
+if (!fs.existsSync(publicDir)) {
+    fs.mkdirSync(publicDir);
+}
+
+const ppDir = path.join(__dirname, 'public/pp');
+if (!fs.existsSync(ppDir)) {
+    fs.mkdirSync(ppDir);
+}
+
+const ppEvent = path.join(__dirname, 'public/event');
+if (!fs.existsSync(ppEvent)) {
+    fs.mkdirSync(ppEvent);
+}
+
 const port = process.env.PORT;
 
 app.use(morgan('dev'));
-
+app.use('/public', express.static(path.join(__dirname, 'public')));
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'pug');
 app.use(express.urlencoded({extended: true}))
 app.use(express.json());
 app.use(cookieParser());
+
 
 app.use(session({
     secret: 'top secret',
