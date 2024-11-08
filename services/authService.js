@@ -22,7 +22,7 @@ async function authenticateUser(username, password) {
     const passwordMatch = await bcrypt.compare(password, user.password_hash);
     if (!passwordMatch) return null;
 
-    const token = jwt.sign({userId: user._id, userRole: user.role_id}, process.env.JWT_SECRET, {expiresIn: '1h'});
+    const token = jwt.sign({userMail: user.email, userRole: user.role_id}, process.env.JWT_SECRET, {expiresIn: '1h'});
     return {token};
 }
 
