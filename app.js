@@ -13,7 +13,9 @@ const authRouter = require('./routes/auth.js');
 const homeRouter = require('./routes/event.js');
 const userRouter = require('./routes/user.js');
 const chatRouter = require('./routes/chat.js');
-const {verifyToken, verifyAdminToken} = require("./middleware/authMiddleware");
+const {verifyToken} = require("./middleware/authMiddleware");
+const http = require("http");
+const {Server} = require("socket.io");
 
 const app = express();
 dotenv.config();
@@ -35,6 +37,8 @@ if (!fs.existsSync(ppEvent)) {
 
 const port = process.env.PORT;
 
+const server = http.createServer(app);
+
 app.use(morgan('dev'));
 app.use('/public', express.static(path.join(__dirname, 'public')));
 app.set('views', path.join(__dirname, 'views'));
@@ -50,6 +54,14 @@ app.use(session({
     saveUninitialized: true
 }));
 
+const io = new Server(server);
+
+// Middleware to insert io in requests
+app.use((req, res, next) => {
+    req.io = io;
+    next();
+});
+
 app.use('/', indexRouter);
 app.use('/auth', authRouter);
 app.use('/event', homeRouter);
@@ -61,10 +73,19 @@ if (process.env.CI) {
     console.log("Running in CI mode - syntax and startup check only.");
     process.exit(0);  // Stop immediately in CI
 } else {
-    app.listen(port, () => {
+    server.listen(port, () => {
         console.log(`Listening on port ${port}`);
     });
 }
+
+// TODO remove (debug)
+io.on('connection', (socket) => {
+    console.log(`New connection. Socket id : ${socket.id}`);
+
+    socket.on("join_room", (room) => {
+        socket.join(room);
+    });
+});
 
 async function connectToMongoDB() {
     try {

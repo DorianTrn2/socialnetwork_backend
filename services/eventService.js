@@ -4,8 +4,9 @@ async function getAllEvents(filter = {}) {
     return Event.find(filter).exec();
 }
 
-async function getAllSortedEvents(sort_by_date, filter = {}) {
-    return Event.find(filter).sort({date: sort_by_date}).exec();
+async function getAllSortedEvents(sortValue, filter = {}, isSortedByDate = true) {
+    const sort = isSortedByDate ? {date: sortValue} : {price: sortValue}
+    return Event.find(filter).sort(sort).exec();
 }
 
 async function getEventById(id) {

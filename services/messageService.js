@@ -11,7 +11,7 @@ async function getAllMessages() {
  * @returns the messages, sorted by date with the most recent first
  */
 async function getAllMessagesByChatId(chat_id) {
-    return Message.find({chat_id}).sort({date: -1}).exec();
+    return Message.find({chat_id}).sort({date: 1}).exec();
 }
 
 /**
