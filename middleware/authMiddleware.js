@@ -54,13 +54,16 @@ async function verifyUserHaveAccessToken(req, res, next) {
             return res.status(404).json({message: 'Error - chat does not exist in database'});
         }
 
-        if (decoded.userRole && `${decoded.userRole}` === constant.ADMIN_ROLE_ID) {
-            // Admin is allowed to see the chats of all users
-            req.userEmail = decoded.userEmail;
-            next();
-        } else if (chat.user_email1 === decoded.userEmail || chat.user_email2 === decoded.userEmail) {
+        req.chat_id = chat_id; // Save chat_id for subroutes
+
+        if (chat.user_email1 === decoded.userEmail || chat.user_email2 === decoded.userEmail) {
             // User of the chat is allowed to see this chat
             req.userEmail = decoded.userEmail;
+            next();
+        } else if (decoded.userRole && `${decoded.userRole}` === constant.ADMIN_ROLE_ID) {
+            // Admin is allowed to see the chats of all users
+            req.userEmail = decoded.userEmail;
+            req.isLoggedInAsAdmin = true // Save this information to add an alert when an admin is logged in in a chat but not a member of this chat
             next();
         } else {
             return res.status(401).json({error: 'Access denied'});

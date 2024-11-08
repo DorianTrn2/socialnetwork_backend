@@ -39,7 +39,9 @@ async function getAllChatsOfUser(req, res) {
 
 async function getChatById(req, res) {
     try {
-        const {chat_id} = req.params;
+        const {chat_id} = req;
+
+        console.log(req)
 
         if (!chat_id) {
             return res.status(404).json({message: 'Error - parameter chat_id is undefined'});
