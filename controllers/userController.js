@@ -1,5 +1,7 @@
 const userService = require("../services/userService");
 const eventService = require("../services/eventService");
+const path = require('path');
+const fs = require('fs');
 const userLikeEventService = require("../services/userLikeEventService");
 
 async function getAllUsers(req, res) {
@@ -45,7 +47,7 @@ async function updateUser(req, res) {
 async function myProfile(req, res) {
     try {
         const email = req.userEmail;
-        const user = await userService.getUserByEmail(email);
+        const user = await userService.getProfile(email);
 
         const likedEvents_obj = await userLikeEventService.getLikedEvents(email);
         let likedEvents_ids = [];
@@ -65,11 +67,45 @@ async function myProfile(req, res) {
     }
 }
 
+async function getImage(req, res) {
+    try{
+        const username = req.params.user_id;
+
+        const ppDir = path.join(__dirname, `../public/pp`);
+        const defaultPicture = path.join(ppDir, 'default.png');
+
+        const profilePicture = fs.readdirSync(ppDir).find(file => file.startsWith(username + '.'));
+
+        if (profilePicture) {
+            res.status(200).sendFile(path.join(ppDir, profilePicture));
+        } else {
+            res.status(200).sendFile(defaultPicture);
+        }
+
+    }catch(error){
+        console.log(error)
+        res.status(500).json({ error: 'Failed to retrieve user' });
+    }
+}
+
+async function sendImage(req, res) {
+    try{
+        res.status(200).json({ message: 'Image sent successfully' });
+    }
+    catch(error){
+
+        res.status(500).json({ error: 'Failed sending image' });
+    }
+}
+
+
 module.exports = {
     getAllUsers,
     getUserByEmail,
     getUserByUsername,
     updateUser,
-    myProfile
+    myProfile,
+    getImage,
+    sendImage
 };
 
