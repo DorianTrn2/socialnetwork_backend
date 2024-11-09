@@ -3,7 +3,7 @@ const userRoleService = require('../services/userRoleService');
 const eventThemeService = require('../services/eventThemeService');
 
 const EMAIL_REGEX = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/;
-const NAME_REGEX = /^[a-zA-ZâÂàÀçÇéÉêÊèÈëËîÎ\s-]+$/;
+const NAME_REGEX = /^[a-zA-ZâÂàÀçÇéÉêÊèÈëËîÎ'\s-]+$/;
 const USERNAME_REGEX = /^\w+$/;
 const DATE_REGEX = /^(\d{2})\/(\d{2})\/(\d{4})$/;
 const DATETIME_REGEX = /^(\d{4})-(\d{2})-(\d{2})T(\d{2}):(\d{2}):(\d{2})Z$/;
@@ -63,11 +63,11 @@ function priceIsValid(price) {
 /**
  * Verify that the given email and username are not already used.
  *
- * @param email the email to verify
  * @param username the username to verify
+ * @param email the email to verify (`null` = do not check email)
  * @returns whether the email and the username are available or not
  */
-async function emailOrUsernameAreAlreadyUsed(email, username) {
+async function emailOrUsernameAreAlreadyUsed(username, email = null) {
     const registeredUsers = (await userService.getAllUsers());
     return registeredUsers.some((user) => user.email === email || user.username === username);
 }
@@ -91,10 +91,7 @@ async function roleWithThisIdExists(roleId) {
  */
 async function eventThemeWithThisCodeExists(eventThemeCode) {
     const eventThemes = (await eventThemeService.getAllEventThemes());
-    return eventThemes.some((eventTheme) => {
-        console.log(eventTheme)
-        return `${eventTheme.code}` === `${eventThemeCode}`
-    });
+    return eventThemes.some((eventTheme) => `${eventTheme.code}` === `${eventThemeCode}`);
 }
 
 module.exports = {

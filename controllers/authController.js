@@ -34,7 +34,7 @@ async function register(req, res) {
         } else if (new Date() < new Date(birthday)) {
             return res.status(400).json({error: 'Invalid birthday (date in the future)'});
         }
-        if (await helper.emailOrUsernameAreAlreadyUsed(email, login)) {
+        if (await helper.emailOrUsernameAreAlreadyUsed(login, email)) {
             return res.status(400).json({error: 'Email or username is already used'});
         }
 

@@ -126,14 +126,13 @@ async function addEvent(req, res) {
 
 async function updateEvent(req, res) {
     try {
-        const {created_by_email, theme_code, name, date, price} = req.body;
+        const {theme_code, name, date, price} = req.body;
         const {event_id} = req.params;
 
         if (!event_id) {
             return res.status(404).json({message: 'Error - parameter event_id is undefined'});
         }
 
-        // TODO created by email must be replaced by an user is creator OR admin user check
         if (!theme_code || !name || !date || !price) {
             return res.status(400).json({error: 'Bad request'});
         }
@@ -149,7 +148,7 @@ async function updateEvent(req, res) {
         }
 
         const event = new Event({
-            created_by_email,
+            created_by_email: req.userEmail, // unused
             theme_code,
             name,
             date,
@@ -191,17 +190,16 @@ async function deleteEvent(req, res) {
 }
 
 async function uploadEventImage(req, res) {
-    try{
-        res.status(200).json({ message: 'Image sent successfully' });
-    }
-    catch(error){
+    try {
+        res.status(200).json({message: 'Image sent successfully'});
+    } catch (error) {
 
-        res.status(500).json({ error: 'Failed sending image' });
+        res.status(500).json({error: 'Failed sending image'});
     }
 }
 
 async function getImage(req, res) {
-    try{
+    try {
         const event_id = req.params.event_id;
 
         const eventDir = path.join(__dirname, `../public/event`);
@@ -215,9 +213,9 @@ async function getImage(req, res) {
             res.status(200).sendFile(defaultPicture);
         }
 
-    }catch(error){
+    } catch (error) {
         console.log(error)
-        res.status(500).json({ error: 'Failed to retrieve event' });
+        res.status(500).json({error: 'Failed to retrieve event'});
     }
 }
 

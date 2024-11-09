@@ -3,6 +3,8 @@ const eventService = require("../services/eventService");
 const path = require('path');
 const fs = require('fs');
 const userLikeEventService = require("../services/userLikeEventService");
+const helper = require("../helper/inputValidityHelper");
+const {USER_ROLE_ID} = require("../constant");
 
 async function getAllUsers(req, res) {
     try {
@@ -13,31 +15,38 @@ async function getAllUsers(req, res) {
     }
 }
 
-async function getUserByEmail(req, res) {
-    try {
-        const email = req.params.email;
-        const user = await userService.getUserByEmail(email);
-        res.status(200).json(user);
-    } catch (error) {
-        res.status(500).json({error: 'Failed to retrieve user'});
-    }
-}
-
-async function getUserByUsername(req, res) {
-    try {
-        const username = req.params.username;
-        const user = await userService.getUserByUsername(username);
-        res.status(200).json(user);
-    } catch (error) {
-        res.status(500).json({error: 'Failed to retrieve user'});
-    }
-}
-
 async function updateUser(req, res) {
     try {
-        const user = req.body;
+        const {login, password, firstname, lastname, birthday} = req.body;
         const user_email = req.userEmail;
-        await userService.updateUser(user, user_email);
+
+        if (!user_email || !login || !password || !firstname || !lastname || !birthday) {
+            return res.status(400).json({error: 'Bad request'});
+        }
+
+        const user = await userService.getUserByEmail(user_email);
+
+        if (!helper.nameIsValid(firstname)) {
+            return res.status(400).json({error: 'Invalid firstname format'});
+        }
+        if (!helper.nameIsValid(lastname)) {
+            return res.status(400).json({error: 'Invalid lastname format'});
+        }
+        if (!helper.usernameIsValid(login)) {
+            return res.status(400).json({error: 'Invalid username format'});
+        }
+        if (!helper.dateIsValid(birthday)) {
+            return res.status(400).json({error: 'Invalid birthday format'});
+        } else if (new Date() < new Date(birthday)) {
+            return res.status(400).json({error: 'Invalid birthday (date in the future)'});
+        }
+        if (user.username !== login) {
+            if (await helper.emailOrUsernameAreAlreadyUsed(login)) {
+                return res.status(400).json({error: 'Username is already used'});
+            }
+        }
+
+        await userService.updateUser(user_email, login, password, USER_ROLE_ID, firstname, lastname, birthday);
         res.status(201).json({message: 'User updated successfully'});
     } catch (error) {
         res.status(500).json({error: 'Failed to update user'});
@@ -68,7 +77,7 @@ async function myProfile(req, res) {
 }
 
 async function getImage(req, res) {
-    try{
+    try {
         const username = req.params.user_id;
 
         const ppDir = path.join(__dirname, `../public/pp`);
@@ -82,27 +91,24 @@ async function getImage(req, res) {
             res.status(200).sendFile(defaultPicture);
         }
 
-    }catch(error){
+    } catch (error) {
         console.log(error)
-        res.status(500).json({ error: 'Failed to retrieve user' });
+        res.status(500).json({error: 'Failed to retrieve user'});
     }
 }
 
 async function sendImage(req, res) {
-    try{
-        res.status(200).json({ message: 'Image sent successfully' });
-    }
-    catch(error){
+    try {
+        res.status(200).json({message: 'Image sent successfully'});
+    } catch (error) {
 
-        res.status(500).json({ error: 'Failed sending image' });
+        res.status(500).json({error: 'Failed sending image'});
     }
 }
 
 
 module.exports = {
     getAllUsers,
-    getUserByEmail,
-    getUserByUsername,
     updateUser,
     myProfile,
     getImage,
