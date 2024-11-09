@@ -1,8 +1,9 @@
 const userService = require('../services/userService');
 const userRoleService = require('../services/userRoleService');
+const eventThemeService = require('../services/eventThemeService');
 
 const EMAIL_REGEX = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/;
-const NAME_REGEX = /^[a-zA-ZâÂàÀçÇéÉêÊèÈëËîÎ-]+$/;
+const NAME_REGEX = /^[a-zA-ZâÂàÀçÇéÉêÊèÈëËîÎ\s-]+$/;
 const USERNAME_REGEX = /^\w+$/;
 const DATE_REGEX = /^(\d{2})\/(\d{2})\/(\d{4})$/;
 const DATETIME_REGEX = /^(\d{4})-(\d{2})-(\d{2})T(\d{2}):(\d{2}):(\d{2})Z$/;
@@ -46,7 +47,17 @@ function usernameIsValid(username) {
 function dateIsValid(date) {
     // Force string to prevent using timestamp (time in milliseconds)
     // new Date("x") returns the specific date "Invalid Date"
-    return new Date(`${date}`).toString() !== new Date("x").toString()
+    return new Date(`${date}`).toString() !== new Date("x").toString();
+}
+
+/**
+ * Verify that the given price is valid (positive ad not null).
+ *
+ * @param price the price to verify
+ * @returns whether the price is valid or not
+ */
+function priceIsValid(price) {
+    return !isNaN(parseFloat(price)) && parseFloat(price) >= 0
 }
 
 /**
@@ -64,7 +75,7 @@ async function emailOrUsernameAreAlreadyUsed(email, username) {
 /**
  * Verify that the given role id exists in the database.
  *
- * @param roleId the role id to verify=
+ * @param roleId the role id to verify
  * @returns whether the role id exists in the database or not
  */
 async function roleWithThisIdExists(roleId) {
@@ -72,11 +83,27 @@ async function roleWithThisIdExists(roleId) {
     return userRoles.some((userRole) => `${userRole.id}` === `${roleId}`);
 }
 
+/**
+ * Verify that the given event theme code exists in the database.
+ *
+ * @param eventThemeCode the event theme code to verify
+ * @returns whether the event theme code exists in the database or not
+ */
+async function eventThemeWithThisCodeExists(eventThemeCode) {
+    const eventThemes = (await eventThemeService.getAllEventThemes());
+    return eventThemes.some((eventTheme) => {
+        console.log(eventTheme)
+        return `${eventTheme.code}` === `${eventThemeCode}`
+    });
+}
+
 module.exports = {
     emailIsValid,
     nameIsValid,
     usernameIsValid,
+    dateIsValid,
+    priceIsValid,
     emailOrUsernameAreAlreadyUsed,
     roleWithThisIdExists,
-    dateIsValid,
+    eventThemeWithThisCodeExists,
 }

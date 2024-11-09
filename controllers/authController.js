@@ -1,5 +1,5 @@
 const authService = require('../services/authService');
-const helper = require('../helper/helper');
+const helper = require('../helper/inputValidityHelper');
 const {USER_ROLE_ID} = require('../constant');
 
 /**
@@ -18,7 +18,6 @@ async function register(req, res) {
         }
 
         if (!helper.emailIsValid(email)) {
-            console.log("just kidding", helper.emailIsValid(email))
             return res.status(400).json({error: 'Invalid email format'});
         }
         if (!helper.nameIsValid(firstname)) {

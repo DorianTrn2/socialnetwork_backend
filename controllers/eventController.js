@@ -1,5 +1,6 @@
-const eventService = require("../services/eventService")
-const Event = require("../models/Event")
+const eventService = require("../services/eventService");
+const Event = require("../models/Event");
+const helper = require('../helper/inputValidityHelper');
 
 function getEventsFilters(creator_email = null, date = null, name = null, price_min = null, price_max = null) {
     const filter = {}
@@ -86,6 +87,20 @@ async function addEvent(req, res) {
     try {
         const {theme_code, name, date, price} = req.body;
 
+        if (!theme_code || !name || !date || !price) {
+            return res.status(400).json({error: 'Bad request'});
+        }
+
+        if (!helper.dateIsValid(date)) {
+            return res.status(400).json({error: 'Invalid event date format'});
+        }
+        if (!helper.priceIsValid(price)) {
+            return res.status(400).json({error: 'Invalid event price'});
+        }
+        if (!await helper.eventThemeWithThisCodeExists(theme_code)) {
+            return res.status(400).json({error: 'Event theme with this code does not exist'});
+        }
+
         const eventToAdd = new Event({
             created_by_email: req.userEmail,
             theme_code,
@@ -114,6 +129,21 @@ async function updateEvent(req, res) {
 
         if (!event_id) {
             return res.status(404).json({message: 'Error - parameter event_id is undefined'});
+        }
+
+        // TODO created by email must be replaced by an user is creator OR admin user check
+        if (!theme_code || !name || !date || !price) {
+            return res.status(400).json({error: 'Bad request'});
+        }
+
+        if (!helper.dateIsValid(date)) {
+            return res.status(400).json({error: 'Invalid event date format'});
+        }
+        if (!helper.priceIsValid(price)) {
+            return res.status(400).json({error: 'Invalid event price'});
+        }
+        if (!await helper.eventThemeWithThisCodeExists(theme_code)) {
+            return res.status(400).json({error: 'Event theme with this code does not exist'});
         }
 
         const event = new Event({
