@@ -7,9 +7,12 @@ const {verifyAdminToken} = require("../middleware/authMiddleware");
 router.get('/myprofile', userController.myProfile);
 router.put('/update', userController.updateUser);
 router.get('/all', verifyAdminToken, userController.getAllUsers);
+
+// TODO to delete once angular application is created
 router.get('/send_image', (req, res) => {
     res.render('send_image.pug')
 });
+
 router.post('/send_image', upload.single('image'), userController.sendImage);
-router.get('/:user_id/get_image', userController.getImage);
+router.get('/get_image', userController.getImage);
 module.exports = router;

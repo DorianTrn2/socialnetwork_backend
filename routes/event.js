@@ -9,24 +9,25 @@ router.get('', eventController.getAllEvents);
 
 router.post('/new', verifyToken, eventController.addEvent);
 
-router.put('/update/:event_id', verifyUserIsEventCreator, eventController.updateEvent);
+router.put('/:event_id/update', verifyUserIsEventCreator, eventController.updateEvent);
 
-router.delete('/delete/:event_id', verifyUserIsEventCreator, eventController.deleteEvent);
+router.delete('/:event_id/delete', verifyUserIsEventCreator, eventController.deleteEvent);
 
-router.get('/:event_id', verifyToken, eventController.getEventById);
-
+// TODO to delete once angular application is created
 router.get('/:event_id/send_image', verifyUserIsEventCreator, (req, res) => {
     res.render('send_image.pug')
 });
 
 router.post('/:event_id/send_image', verifyUserIsEventCreator, upload.single('image'), eventController.uploadEventImage);
 
-router.get('/:event_id/get_image', verifyToken, eventController.getImage);
+router.get('/:event_id/get_image', eventController.getImage);
 
 router.post('/:event_id/like', verifyToken, userLikeEventController.likeEvent);
 
 router.post('/:event_id/unlike', verifyToken, userLikeEventController.unlikeEvent);
 
 router.get('/:event_id/likes', verifyToken, userLikeEventController.getUsersWhoLikedEvent);
+
+router.get('/:event_id', eventController.getEventById);
 
 module.exports = router;

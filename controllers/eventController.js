@@ -232,7 +232,7 @@ async function deleteEvent(req, res) {
             return res.status(404).json({message: 'Error - received object is null => not deleted'});
         }
 
-        res.status(201).json(result);
+        res.status(200).json(result);
     } catch (error) {
         console.error(error);
         res.status(500).json({message: 'Internal server error'});
@@ -267,7 +267,7 @@ async function getImage(req, res) {
         const event_id = req.params.event_id;
 
         const eventDir = path.join(__dirname, `../public/event`);
-        const defaultPicture = path.join(eventDir, 'default.png');
+        const defaultPicture = path.join(eventDir, '_default.png');
 
         const eventPicture = fs.readdirSync(eventDir).find(file => file.startsWith(event_id + '.'));
 

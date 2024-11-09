@@ -6,6 +6,11 @@ const userEmail = document.getElementById("userEmail").innerText;
 let socket;
 let chatData;
 
+// Function to add leading zero to single-digit numbers
+function pad(value) {
+    return value.toString().padStart(2, '0');
+}
+
 function connectToWebsocket() {
     socket = io("http://localhost:3001");
 
@@ -17,7 +22,9 @@ function connectToWebsocket() {
 
     socket.on("new_message", (message) => {
         const listItem = document.createElement("li");
-        listItem.innerText = message.message;
+        const date = new Date(message.date);
+        const stringDate = `${pad(date.getUTCDate())}/${pad(date.getMonth() + 1)}/${date.getFullYear()} ${pad(date.getHours())}:${pad(date.getMinutes())}:${pad(date.getSeconds())}`;
+        listItem.innerText = `[(${stringDate}) ${message.sender_email}]: ${message.message}`;
         messageList.appendChild(listItem);
     });
 }
@@ -25,7 +32,9 @@ function connectToWebsocket() {
 function loadMessagesHistory(messages) {
     messages.forEach((message) => {
         const listItem = document.createElement("li");
-        listItem.innerText = message.message;
+        const date = new Date(message.date);
+        const stringDate = `${pad(date.getUTCDate())}/${pad(date.getMonth() + 1)}/${date.getFullYear()} ${pad(date.getHours())}:${pad(date.getMinutes())}:${pad(date.getSeconds())}`;
+        listItem.innerText = `[(${stringDate}) ${message.sender_email}]: ${message.message}`;
         messageList.appendChild(listItem);
     })
 }
