@@ -13,8 +13,18 @@ async function getLikedEvents(user_email) {
     return UserLikeEvent.find({user_email}).exec();
 }
 
+async function getUsersWhoLikedEvent(event_id) {
+    const likes = await UserLikeEvent.find({event_id}).exec();
+    const users = [];
+    for (let i = 0; i < likes.length; i++) {
+        users.push(likes[i].user_email);
+    }
+    return users;
+}
+
 module.exports = {
     likeEvent,
     unlikeEvent,
-    getLikedEvents
+    getLikedEvents,
+    getUsersWhoLikedEvent
 };
