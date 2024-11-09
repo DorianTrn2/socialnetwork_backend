@@ -3,7 +3,8 @@ const userService = require('../services/userService');
 
 async function likeEvent(req, res) {
     try {
-        const {user_email, event_id} = req.body;
+        const user_email = req.userEmail;
+        const {event_id} = req.params;
         await userlikeeventService.likeEvent({user_email, event_id});
         res.status(200).json({message: 'Event liked'});
     } catch (error) {
@@ -14,7 +15,8 @@ async function likeEvent(req, res) {
 
 async function unlikeEvent(req, res) {
     try {
-        const {user_email, event_id} = req.body;
+        const user_email = req.userEmail;
+        const {event_id} = req.params;
         await userlikeeventService.unlikeEvent({user_email, event_id});
         res.status(200).json({message: 'Event unliked'});
     }
@@ -26,7 +28,7 @@ async function unlikeEvent(req, res) {
 
 async function getLikedEvents(req, res) {
     try {
-        const {user_email} = req.params;
+        const user_email = req.userEmail;
         const likedEvents = await userlikeeventService.getLikedEvents(user_email);
         res.status(200).json(likedEvents);
     } catch (error) {
