@@ -14,5 +14,5 @@ router.get('/send_image', (req, res) => {
 });
 
 router.post('/send_image', upload.single('image'), userController.sendImage);
-router.get('/get_image', userController.getImage);
+router.get('/:user_username/get_image', userController.getImage);
 module.exports = router;
