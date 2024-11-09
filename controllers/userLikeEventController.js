@@ -1,11 +1,17 @@
 const userLikeEventService = require('../services/userLikeEventService');
 const userService = require('../services/userService');
 
+/**
+ * Like the selected event. Send http status `200` if request is successful or `500` on internal server error.
+ *
+ * @param req
+ * @param res
+ */
 async function likeEvent(req, res) {
     try {
         const user_email = req.userEmail;
         const {event_id} = req.params;
-        await userLikeEventService.likeEvent({user_email, event_id});
+        await userLikeEventService.likeEvent(user_email, event_id);
         res.status(200).json({message: 'Event liked'});
     } catch (error) {
         console.error(error);
@@ -13,11 +19,17 @@ async function likeEvent(req, res) {
     }
 }
 
+/**
+ * Unlike the selected event. Send http status `200` if request is successful or `500` on internal server error.
+ *
+ * @param req
+ * @param res
+ */
 async function unlikeEvent(req, res) {
     try {
         const user_email = req.userEmail;
         const {event_id} = req.params;
-        await userLikeEventService.unlikeEvent({user_email, event_id});
+        await userLikeEventService.unlikeEvent(user_email, event_id);
         res.status(200).json({message: 'Event unliked'});
     } catch (error) {
         console.error(error);
@@ -25,6 +37,12 @@ async function unlikeEvent(req, res) {
     }
 }
 
+/**
+ * Get the connected user liked events. Send http status `200` if request is successful or `500` on internal server error.
+ *
+ * @param req
+ * @param res
+ */
 async function getLikedEvents(req, res) {
     try {
         const user_email = req.userEmail;
@@ -36,6 +54,12 @@ async function getLikedEvents(req, res) {
     }
 }
 
+/**
+ * Get the users who like the selected event. Send http status `200` if request is successful or `500` on internal server error.
+ *
+ * @param req
+ * @param res
+ */
 async function getUsersWhoLikedEvent(req, res) {
     try {
         const {event_id} = req.params;

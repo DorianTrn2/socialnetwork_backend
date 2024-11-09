@@ -1,5 +1,10 @@
 const Message = require("../models/Message");
 
+/**
+ * Get all existing messages in the database.
+ *
+ * @returns all messages
+ */
 async function getAllMessages() {
     return Message.find({}).exec();
 }

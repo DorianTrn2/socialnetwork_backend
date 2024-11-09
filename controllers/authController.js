@@ -3,11 +3,11 @@ const helper = require('../helper/inputValidityHelper');
 const {USER_ROLE_ID} = require('../constant');
 
 /**
- * Register new user.
+ * Register new user. Send http status `201` if request is successful, `400` if bad request format or `500` on
+ * internal server error.
  *
  * @param req
  * @param res
- * @returns {Promise<void>}
  */
 async function register(req, res) {
     try {
@@ -45,6 +45,13 @@ async function register(req, res) {
     }
 }
 
+/**
+ * Log in by creating an authentication token cookie. Send http status `200` if request is successful, `401` if login
+ * and password do not match or `500` on internal server error.
+ *
+ * @param req
+ * @param res
+ */
 async function login(req, res) {
     try {
         const {login, password} = req.body;
@@ -59,6 +66,13 @@ async function login(req, res) {
     }
 }
 
+/**
+ * Log out by clearing the authentication token cookie. Send http status `200` if request is successful or `500` on
+ * internal server error.
+ *
+ * @param req
+ * @param res
+ */
 async function logout(req, res) {
     try {
         res.clearCookie('token');

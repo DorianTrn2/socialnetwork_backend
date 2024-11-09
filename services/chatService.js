@@ -1,9 +1,20 @@
 const Chat = require("../models/Chat");
 
+/**
+ * Get all existing chats in the database.
+ *
+ * @returns all chats
+ */
 async function getAllChats() {
     return Chat.find({}).exec();
 }
 
+/**
+ * Get all chats of the selected user in the database.
+ *
+ * @param user_email the user email
+ * @returns all chats
+ */
 async function getAllChatsOfUser(user_email) {
     return Chat.find({
             $or: [
@@ -14,6 +25,12 @@ async function getAllChatsOfUser(user_email) {
     ).exec(); // user_mail1 === user_mail OR user_mail2 === user_mail
 }
 
+/**
+ * Get a chat in the database by its id.
+ *
+ * @param id the chat id
+ * @returns the requested chat
+ */
 async function getChatById(id) {
     return Chat.findById(id).exec();
 }

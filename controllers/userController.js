@@ -6,6 +6,13 @@ const userLikeEventService = require("../services/userLikeEventService");
 const helper = require("../helper/inputValidityHelper");
 const {USER_ROLE_ID} = require("../constant");
 
+/**
+ * Get all existing users. Send http status `200` if request is successful or `500` on internal server error.
+ *
+ * @param req
+ * @param res
+ * @returns all existing users on success
+ */
 async function getAllUsers(req, res) {
     try {
         const users = await userService.getAllUsers();
@@ -15,6 +22,14 @@ async function getAllUsers(req, res) {
     }
 }
 
+/**
+ * Update the connected user. Send http status `201` if event edition is successful, `400` on bad request (wrong
+ * inputs) or `500` on internal server error.
+ *
+ * @param req
+ * @param res
+ * @returns the update request status on success
+ */
 async function updateUser(req, res) {
     try {
         const {login, password, firstname, lastname, birthday} = req.body;
@@ -53,6 +68,13 @@ async function updateUser(req, res) {
     }
 }
 
+/**
+ * Get the connected user profile. Send http status `200` if request is successful or `500` on internal server error.
+ *
+ * @param req
+ * @param res
+ * @returns the user profile, liked events and created events on success
+ */
 async function myProfile(req, res) {
     try {
         const email = req.userEmail;
@@ -76,6 +98,13 @@ async function myProfile(req, res) {
     }
 }
 
+/**
+ * Get the connected user profile image. Send http status `200` if request is successful or `500` on internal server error.
+ *
+ * @param req
+ * @param res
+ * @returns the user profile image
+ */
 async function getImage(req, res) {
     try {
         const username = req.params.user_id;
@@ -97,9 +126,15 @@ async function getImage(req, res) {
     }
 }
 
+/**
+ * Upload the connected user profile image. Send http status `201` if request is successful or `500` on internal server error.
+ *
+ * @param req
+ * @param res
+ */
 async function sendImage(req, res) {
     try {
-        res.status(200).json({message: 'Image sent successfully'});
+        res.status(201).json({message: 'Image sent successfully'});
     } catch (error) {
 
         res.status(500).json({error: 'Failed sending image'});

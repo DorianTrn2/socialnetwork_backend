@@ -3,6 +3,13 @@ const constant = require('../constant')
 const chatService = require("../services/chatService");
 const eventService = require("../services/eventService");
 
+/**
+ * Verify that the user token is valid. Send http status code `401` if user is not connected.
+ *
+ * @param req
+ * @param res
+ * @param next
+ */
 function verifyToken(req, res, next) {
     const token = req.cookies.token;
     if (!token) {
@@ -17,6 +24,14 @@ function verifyToken(req, res, next) {
     }
 }
 
+/**
+ * Verify that the user token is valid and that he is an admin. Send http status code `401` if user is not connected or
+ * not an admin.
+ *
+ * @param req
+ * @param res
+ * @param next
+ */
 function verifyAdminToken(req, res, next) {
     const token = req.cookies.token;
     if (!token) {
@@ -35,7 +50,15 @@ function verifyAdminToken(req, res, next) {
     }
 }
 
-async function verifyUserHaveAccessToken(req, res, next) {
+/**
+ * Verify that the user token is valid and that he has access to the requested chat. A user has access to a chat if he
+ * is part of this chat or if he is an admin. Send http status code `401` if user doesn't have access to the requested chat
+ *
+ * @param req
+ * @param res
+ * @param next
+ */
+async function verifyUserHaveAccessToChat(req, res, next) {
     const token = req.cookies.token;
     if (!token) {
         return res.status(401).json({error: 'Access denied'});
@@ -74,6 +97,14 @@ async function verifyUserHaveAccessToken(req, res, next) {
     }
 }
 
+/**
+ * Verify that the user token is valid and that he has access to the requested event. A user has access to an event if he
+ * is the creator of this event or if he is an admin. Send http status code `401` if user doesn't have access to the requested event
+ *
+ * @param req
+ * @param res
+ * @param next
+ */
 async function verifyUserIsEventCreator(req, res, next) {
     const token = req.cookies.token;
     if (!token) {
@@ -114,4 +145,9 @@ async function verifyUserIsEventCreator(req, res, next) {
     }
 }
 
-module.exports = {verifyToken, verifyAdminToken, verifyUserHaveAccessToken, verifyUserIsEventCreator};
+module.exports = {
+    verifyToken,
+    verifyAdminToken,
+    verifyUserHaveAccessToken: verifyUserHaveAccessToChat,
+    verifyUserIsEventCreator
+};
