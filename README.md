@@ -73,7 +73,7 @@ Access to certain requests is limited by whether or not the user is logged in, t
 
 ![post](https://img.shields.io/badge/POST-c94a3e?style=for-the-badge&logo=test&logoColor=white)  `/user/send_image`: send the image for the current user
 
-![get](https://img.shields.io/badge/GET-2adb59?style=for-the-badge&logo=test&logoColor=white)  `/user/get_image`: get the image of the current user
+![get](https://img.shields.io/badge/GET-2adb59?style=for-the-badge&logo=test&logoColor=white)  `/user/:user_username/get_image`: get the image of user with username `:user_username`
 
 ### Chats
 
