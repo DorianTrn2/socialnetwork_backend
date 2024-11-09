@@ -19,10 +19,12 @@ async function getAllUsers(filter = {}) {
  * Get a user by its email in the database.
  *
  * @param email the requested user email
- * @returns the requested user
+ * @returns the requested user, without his password
  */
 async function getUserByEmail(email) {
-    return User.findOne({email}).exec();
+    let user = await User.findOne({email}).exec();
+    user.password_hash = undefined;
+    return user;
 }
 
 /**
@@ -66,12 +68,10 @@ async function updateUser(email, login, password, role_id, firstname, lastname, 
  * Get a user by its email in the database.
  *
  * @param email the requested user email
- * @returns the requested user, without his password
+ * @returns the requested user
  */
 async function getProfile(email) {
-    let user = await User.findOne({email}).exec();
-    user.password_hash = undefined;
-    return user;
+    return User.findOne({email}).exec();
 }
 
 module.exports = {
