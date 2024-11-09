@@ -22,9 +22,13 @@ This will start the application in an url according to the environment variables
 
 The following requests have been implemented:
 
-Access to certain requests is limited by whether or not the user is logged in, their role or email address. Lambda users have the access to their own chats only, while admin users are able to go everywhere (even in private chats). Only admin can list users or all the chats. The user `bob` is admin and have the password `password`. The user `alice` is just an user and have the password `password`.
+Access to certain requests is limited by whether or not the user is logged in, their role or email address. Lambda users have the access to their own chats only, while admin users are able to go everywhere (even in private chats). Only admin can list users or all the chats.
 
-A postman collection is available for testing requests using the attached url
+- The user `bob` is admin and have the password `password`.
+- The user `alice` is just an user and have the password `password`.
+- The user `charles` is another user and have the password `password`.
+
+A postman collection is available for testing requests (in postman app homepage, use `Import APIs and collections` and use the given url).
 
 Some requests require the id of an object generated during database initialization, and will therefore need to be modified.
 
@@ -84,6 +88,8 @@ Some requests require the id of an object generated during database initializati
 ![get](https://img.shields.io/badge/GET-2adb59?style=for-the-badge&logo=test&logoColor=white)  `/chat`: get all chats of the connected user *(connected)*
 
 ![get](https://img.shields.io/badge/GET-2adb59?style=for-the-badge&logo=test&logoColor=white)  `/chat/all`: get all chats *(amdin)*
+
+![post](https://img.shields.io/badge/POST-c94a3e?style=for-the-badge&logo=test&logoColor=white)  `/chat/new`: create a new chat between the connected user and the selected user (if no one exist) *(connected)*
 
 
 ### Messages
