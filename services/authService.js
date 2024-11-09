@@ -2,7 +2,19 @@ const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const User = require('../models/User');
 
-async function registerUser({email, login, password, role_id, firstname, lastname, birthday}) {
+/**
+ * Create a user in the database.
+ *
+ * @param email user email (unique)
+ * @param login username (unique)
+ * @param password user clear password (that will be hashed)
+ * @param role_id user role id
+ * @param firstname user firstname
+ * @param lastname user lastname
+ * @param birthday user birthdate
+ * @returns the newly created user
+ */
+async function registerUser(email, login, password, role_id, firstname, lastname, birthday) {
     const hashedPassword = await bcrypt.hash(password, 10);
     const user = new User({
         email,
@@ -16,6 +28,13 @@ async function registerUser({email, login, password, role_id, firstname, lastnam
     return user.save();
 }
 
+/**
+ * Authenticate a user if the login and the password matches.
+ *
+ * @param username the username
+ * @param password the user password
+ * @returns a JWT token
+ */
 async function authenticateUser(username, password) {
     const user = await User.findOne({username});
     if (!user) return null;

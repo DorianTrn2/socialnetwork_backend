@@ -1,6 +1,14 @@
 const messageService = require("../services/messageService");
 const Message = require("../models/Message");
 
+/**
+ * Get all existing messages. Send http status `200` if request is successful, `404` on null object received or `500` on
+ * internal server error.
+ *
+ * @param req
+ * @param res
+ * @returns all existing messages on success
+ */
 async function getAllMessages(req, res) {
     try {
         const messages = await messageService.getAllMessages();
@@ -16,6 +24,14 @@ async function getAllMessages(req, res) {
     }
 }
 
+/**
+ * Add a message in the database en emit it to the websockets. Send http status `201` if request is successful, `404`
+ * on null object received or `500` on internal server error.
+ *
+ * @param req
+ * @param res
+ * @returns the newly created message
+ */
 async function addMessage(req, res) {
     try {
         const {message} = req.body;

@@ -4,33 +4,24 @@ const userService = require('../services/userService');
 
 const storage = multer.diskStorage({
     destination: (req, file, cb) => {
-        if(req.params.event_id){
+        if (req.params.event_id) {
             cb(null, path.join(__dirname, '../public/event'));
-            return;
-        }
-        else{
+        } else {
             cb(null, path.join(__dirname, '../public/pp'));
-            return;
         }
     },
     filename: async (req, file, cb) => {
-        console.log(req.params);
-        if(req.params.event_id){
+        if (req.params.event_id) {
             const ext = path.extname(file.originalname);
             console.log(req.params.event_id);
             cb(null, `${req.params.event_id}${ext}`);
-            return;
-        }
-        else{
-        const user = await userService.getUserByEmail(req.userEmail);
-        console.log(user);
-        const username = user.username;
-        console.log(username);
+        } else {
+            const user = await userService.getUserByEmail(req.userEmail);
+            const username = user.username;
 
-        const ext = path.extname(file.originalname);
-        cb(null, `${username}${ext}`);
-        return;
-    }
+            const ext = path.extname(file.originalname);
+            cb(null, `${username}${ext}`);
+        }
     }
 });
 
@@ -46,6 +37,6 @@ const fileFilter = (req, file, cb) => {
     }
 };
 
-const upload = multer({ storage: storage, fileFilter: fileFilter });
+const upload = multer({storage: storage, fileFilter: fileFilter});
 
 module.exports = upload;
