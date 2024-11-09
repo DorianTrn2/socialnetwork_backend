@@ -26,7 +26,7 @@ router.post('/:event_id/like', verifyToken, userLikeEventController.likeEvent);
 
 router.post('/:event_id/unlike', verifyToken, userLikeEventController.unlikeEvent);
 
-router.get('/:event_id/likes', verifyToken, userLikeEventController.getUsersWhoLikedEvent);
+router.get('/:event_id/likes', userLikeEventController.getUsersWhoLikedEvent);
 
 router.get('/:event_id', eventController.getEventById);
 

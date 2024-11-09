@@ -6,6 +6,7 @@ const messageRouter = require('./message.js');
 
 router.get('', chatController.getAllChatsOfUser);
 router.get('/all', verifyAdminToken, chatController.getAllChats);
+router.post('/new', chatController.addChat);
 
 // You must be user of chat or admin to go there
 router.use('/:chat_id', verifyUserHaveAccessToChat, messageRouter);
