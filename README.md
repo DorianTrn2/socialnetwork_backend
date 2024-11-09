@@ -26,7 +26,7 @@ Access to certain requests is limited by whether or not the user is logged in, t
 
 ### Authentication
 
-![get](https://img.shields.io/badge/GET-2adb59?style=for-the-badge&logo=test&logoColor=white)  `/auth/login`: get the login form
+![get](https://img.shields.io/badge/GET-2adb59?style=for-the-badge&logo=test&logoColor=white)  `/auth/login`: get the login form (backend tests only)
 
 ![post](https://img.shields.io/badge/POST-c94a3e?style=for-the-badge&logo=test&logoColor=white)  `/auth/login`: log in with the username and the password
 
@@ -39,23 +39,23 @@ Access to certain requests is limited by whether or not the user is logged in, t
 
 ![get](https://img.shields.io/badge/GET-2adb59?style=for-the-badge&logo=test&logoColor=white)  `/event`: list all events
 
-![get](https://img.shields.io/badge/GET-2adb59?style=for-the-badge&logo=test&logoColor=white)  `/event/new`: create an event
+![get](https://img.shields.io/badge/GET-2adb59?style=for-the-badge&logo=test&logoColor=white)  `/event/new`: create an event *(connected)*
 
 ![get](https://img.shields.io/badge/GET-2adb59?style=for-the-badge&logo=test&logoColor=white)  `/event/:event_id`: get the event with id `:event_id`
 
-![put](https://img.shields.io/badge/PUT-c9983e?style=for-the-badge&logo=test&logoColor=white)  `/event/:event_id/update`: update the event with id `:event_id`
+![put](https://img.shields.io/badge/PUT-c9983e?style=for-the-badge&logo=test&logoColor=white)  `/event/:event_id/update`: update the event with id `:event_id` *(creator user or admin)*
 
-![delete](https://img.shields.io/badge/DELETE-4c609c?style=for-the-badge&logo=test&logoColor=white)  `/event/:event_id/delete`: delete the event with id `:event_id`
+![delete](https://img.shields.io/badge/DELETE-4c609c?style=for-the-badge&logo=test&logoColor=white)  `/event/:event_id/delete`: delete the event with id `:event_id` *(creator user or admin)*
 
-![get](https://img.shields.io/badge/GET-2adb59?style=for-the-badge&logo=test&logoColor=white)  `/event/:event_id/send_image`: get the form to change event image for event with id `:event_id`
+![get](https://img.shields.io/badge/GET-2adb59?style=for-the-badge&logo=test&logoColor=white)  `/event/:event_id/send_image`: get the form to change event image for event with id `:event_id` *(creator user or admin)*
 
-![post](https://img.shields.io/badge/POST-c94a3e?style=for-the-badge&logo=test&logoColor=white)  `/event/:event_id/send_image`: send the image for the event with id `:event_id`
+![post](https://img.shields.io/badge/POST-c94a3e?style=for-the-badge&logo=test&logoColor=white)  `/event/:event_id/send_image`: send the image for the event with id `:event_id` *(creator user or admin)*
 
 ![get](https://img.shields.io/badge/GET-2adb59?style=for-the-badge&logo=test&logoColor=white)  `/event/:event_id/get_image`: get the image for the event with id `:event_id`
 
-![post](https://img.shields.io/badge/POST-c94a3e?style=for-the-badge&logo=test&logoColor=white)  `/event/:event_id/like`: like the event with id `:event_id`
+![post](https://img.shields.io/badge/POST-c94a3e?style=for-the-badge&logo=test&logoColor=white)  `/event/:event_id/like`: like the event with id `:event_id` *(connected)*
 
-![post](https://img.shields.io/badge/POST-c94a3e?style=for-the-badge&logo=test&logoColor=white)  `/event/:event_id/unlike`: unlike the event with id `:event_id`
+![post](https://img.shields.io/badge/POST-c94a3e?style=for-the-badge&logo=test&logoColor=white)  `/event/:event_id/unlike`: unlike the event with id `:event_id` *(connected)*
 
 ![get](https://img.shields.io/badge/GET-2adb59?style=for-the-badge&logo=test&logoColor=white)  `/event/:event_id/likes`: get users who liked the event with id `:event_id`
 
@@ -63,27 +63,29 @@ Access to certain requests is limited by whether or not the user is logged in, t
 
 ### Users
 
-![get](https://img.shields.io/badge/GET-2adb59?style=for-the-badge&logo=test&logoColor=white)  `/user/myprofile`: get user profile
+![get](https://img.shields.io/badge/GET-2adb59?style=for-the-badge&logo=test&logoColor=white)  `/user/myprofile`: get user profile *(connected)*
 
-![put](https://img.shields.io/badge/PUT-c9983e?style=for-the-badge&logo=test&logoColor=white)  `/user/update`: update user profile
+![put](https://img.shields.io/badge/PUT-c9983e?style=for-the-badge&logo=test&logoColor=white)  `/user/update`: update user profile *(connected)*
 
-![get](https://img.shields.io/badge/GET-2adb59?style=for-the-badge&logo=test&logoColor=white)  `/user/all`: get every users list (for admin)
+![get](https://img.shields.io/badge/GET-2adb59?style=for-the-badge&logo=test&logoColor=white)  `/user/all`: get every users list *(admin)*
 
-![get](https://img.shields.io/badge/GET-2adb59?style=for-the-badge&logo=test&logoColor=white)  `/user/send_image`: get the form to change curent user image
+![get](https://img.shields.io/badge/GET-2adb59?style=for-the-badge&logo=test&logoColor=white)  `/user/send_image`: get the form to change curent user image (backend tests only) *(connected)*
 
-![post](https://img.shields.io/badge/POST-c94a3e?style=for-the-badge&logo=test&logoColor=white)  `/user/send_image`: send the image for the current user
+![post](https://img.shields.io/badge/POST-c94a3e?style=for-the-badge&logo=test&logoColor=white)  `/user/send_image`: send the image for the current user *(connected)*
 
 ![get](https://img.shields.io/badge/GET-2adb59?style=for-the-badge&logo=test&logoColor=white)  `/user/:user_username/get_image`: get the image of user with username `:user_username`
 
 ### Chats
 
-![get](https://img.shields.io/badge/GET-2adb59?style=for-the-badge&logo=test&logoColor=white)  `/chat`: get all chats of the connected user
+![get](https://img.shields.io/badge/GET-2adb59?style=for-the-badge&logo=test&logoColor=white)  `/chat`: get all chats of the connected user *(connected)*
 
-![get](https://img.shields.io/badge/GET-2adb59?style=for-the-badge&logo=test&logoColor=white)  `/chat/all`: get all chats (for admin)
+![get](https://img.shields.io/badge/GET-2adb59?style=for-the-badge&logo=test&logoColor=white)  `/chat/all`: get all chats *(amdin)*
 
 
 ### Messages
 
-![get](https://img.shields.io/badge/GET-2adb59?style=for-the-badge&logo=test&logoColor=white)  `/chat/:chat_id`: get messages of chat with id `:chat_id`
+![get](https://img.shields.io/badge/GET-2adb59?style=for-the-badge&logo=test&logoColor=white)  `/chat/:chat_id`: get messages of chat with id `:chat_id` *(user of chat or admin)*
 
-![post](https://img.shields.io/badge/POST-c94a3e?style=for-the-badge&logo=test&logoColor=white)  `/chat/:chat_id/new`: create a new message in the chat with id `:chat_id`
+![post](https://img.shields.io/badge/POST-c94a3e?style=for-the-badge&logo=test&logoColor=white)  `/chat/:chat_id/new`: create a new message in the chat with id `:chat_id` *(user of chat or admin)*
+
+![get](https://img.shields.io/badge/GET-2adb59?style=for-the-badge&logo=test&logoColor=white)  `/chat/:chat_id/test`: get the chat page and form (for back end test purposes only) *(user of chat or admin)*
