@@ -24,6 +24,10 @@ The following requests have been implemented:
 
 Access to certain requests is limited by whether or not the user is logged in, their role or email address. Lambda users have the access to their own chats only, while admin users are able to go everywhere (even in private chats). Only admin can list users or all the chats. The user `bob` is admin and have the password `password`. The user `alice` is just an user and have the password `password`.
 
+A postman collection is available for testing requests using the attached url
+
+Some requests require the id of an object generated during database initialization, and will therefore need to be modified.
+
 ### Authentication
 
 ![get](https://img.shields.io/badge/GET-2adb59?style=for-the-badge&logo=test&logoColor=white)  `/auth/login`: get the login form (backend tests only)
@@ -89,3 +93,12 @@ Access to certain requests is limited by whether or not the user is logged in, t
 ![post](https://img.shields.io/badge/POST-c94a3e?style=for-the-badge&logo=test&logoColor=white)  `/chat/:chat_id/new`: create a new message in the chat with id `:chat_id` *(user of chat or admin)*
 
 ![get](https://img.shields.io/badge/GET-2adb59?style=for-the-badge&logo=test&logoColor=white)  `/chat/:chat_id/test`: get the chat page and form (for back end test purposes only) *(user of chat or admin)*
+
+### Special cases
+
+The following url have been implemented to test the backend part of the application and can therefore be used directly from the browser:
+
+- `/auth/login`: to log in in your browser
+- `/chat/:chat_id/test`: this is a chat interface, implementing websockets
+- `/user/send_image`: form to send user profile picture
+- `/event/:event_id/send_image`: form to send event image
