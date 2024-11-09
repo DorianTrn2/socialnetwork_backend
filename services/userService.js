@@ -1,15 +1,23 @@
 const User = require("../models/User");
 
 async function getAllUsers(filter = {}) {
-    return User.find(filter).exec();
+    let users = await User.find(filter).exec();
+    for (let i = 0; i < users.length; i++) {
+        users[i].password_hash = undefined;
+    }
+    return users;
 }
 
 async function getUserByEmail(email) {
-    return User.findOne({email}).exec();
+    let user = await User.findOne({email}).exec();
+    user.password_hash = undefined;
+    return user;
 }
 
 async function getUserByUsername(username) {
-    return User.findOne({username}).exec();
+    let user = await User.findOne({username}).exec();
+    user.password_hash = undefined;
+    return user;
 }
 
 async function updateUser(user, user_email) {
@@ -24,10 +32,14 @@ async function updateUser(user, user_email) {
     });
 }
 
+async function getProfile(email) {
+    return User.findOne({email}).exec();
+}
 
 module.exports = {
     getAllUsers,
     getUserByEmail,
     getUserByUsername,
-    updateUser
+    updateUser,
+    getProfile
 }; 
