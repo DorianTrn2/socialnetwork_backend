@@ -5,7 +5,7 @@ const bcrypt = require("bcrypt");
  * Get all existing users in the database according to the input filters.
  *
  * @param filter the query filters object
- * @returns all filtered users, without the password
+ * @returns all filtered users, without the passwords
  */
 async function getAllUsers(filter = {}) {
     let users = await User.find(filter).exec();
@@ -19,12 +19,10 @@ async function getAllUsers(filter = {}) {
  * Get a user by its email in the database.
  *
  * @param email the requested user email
- * @returns the requested user, without his password
+ * @returns the requested user
  */
 async function getUserByEmail(email) {
-    let user = await User.findOne({email}).exec();
-    user.password_hash = undefined;
-    return user;
+    return User.findOne({email}).exec();
 }
 
 /**
@@ -68,10 +66,12 @@ async function updateUser(email, login, password, role_id, firstname, lastname, 
  * Get a user by its email in the database.
  *
  * @param email the requested user email
- * @returns the requested user
+ * @returns the requested user, without his password
  */
 async function getProfile(email) {
-    return User.findOne({email}).exec();
+    let user = await User.findOne({email}).exec();
+    user.password_hash = undefined;
+    return user;
 }
 
 module.exports = {

@@ -148,6 +148,6 @@ async function verifyUserIsEventCreator(req, res, next) {
 module.exports = {
     verifyToken,
     verifyAdminToken,
-    verifyUserHaveAccessToken: verifyUserHaveAccessToChat,
+    verifyUserHaveAccessToChat,
     verifyUserIsEventCreator
 };

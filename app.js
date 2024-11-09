@@ -41,6 +41,10 @@ const server = http.createServer(app);
 
 app.use(morgan('dev'));
 app.use('/public', express.static(path.join(__dirname, 'public')));
+
+// TODO to remove once Angular app is created (serve /public/js/chat.js for websockets tests)
+app.use(express.static('public'));
+
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'pug');
 app.use(express.urlencoded({extended: true}))

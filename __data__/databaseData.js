@@ -6,7 +6,7 @@ module.exports = {
     users: [
         {
             email: 'alice@example.com',
-            password_hash: '$2b$10$qMNmU2B8ntspiIFejFVMq.w5UpNdITNcXUpAzNwbYx45lwtPjY2eW',
+            password_hash: '$2b$10$qMNmU2B8ntspiIFejFVMq.w5UpNdITNcXUpAzNwbYx45lwtPjY2eW', // password
             username: 'alice',
             role_id: '695849930838',
             firstname: 'Alice',
@@ -15,7 +15,7 @@ module.exports = {
         },
         {
             email: 'bob@example.com',
-            password_hash: '$2b$10$qMNmU2B8ntspiIFejFVMq.w5UpNdITNcXUpAzNwbYx45lwtPjY2eW',
+            password_hash: '$2b$10$qMNmU2B8ntspiIFejFVMq.w5UpNdITNcXUpAzNwbYx45lwtPjY2eW', // password
             username: 'bob',
             role_id: '142977898717',
             firstname: 'Bob',
@@ -24,7 +24,7 @@ module.exports = {
         },
         {
             email: 'charles@example.com',
-            password_hash: 'hash3',
+            password_hash: '$2b$10$qMNmU2B8ntspiIFejFVMq.w5UpNdITNcXUpAzNwbYx45lwtPjY2eW', // password
             username: 'charles',
             role_id: '695849930838',
             firstname: 'Charles',
@@ -33,7 +33,7 @@ module.exports = {
         },
         {
             email: 'diane@example.com',
-            password_hash: 'hash4',
+            password_hash: '$2b$10$qMNmU2B8ntspiIFejFVMq.w5UpNdITNcXUpAzNwbYx45lwtPjY2eW', // password
             username: 'diane',
             role_id: '695849930838',
             firstname: 'Diane',
@@ -42,7 +42,7 @@ module.exports = {
         },
         {
             email: 'emma@example.com',
-            password_hash: 'hash5',
+            password_hash: '$2b$10$qMNmU2B8ntspiIFejFVMq.w5UpNdITNcXUpAzNwbYx45lwtPjY2eW', // password
             username: 'emma',
             role_id: '695849930838',
             firstname: 'Emma',
@@ -51,7 +51,7 @@ module.exports = {
         },
         {
             email: 'francois@example.com',
-            password_hash: 'hash6',
+            password_hash: '$2b$10$qMNmU2B8ntspiIFejFVMq.w5UpNdITNcXUpAzNwbYx45lwtPjY2eW', // password
             username: 'francois',
             role_id: '695849930838',
             firstname: 'François',
@@ -60,7 +60,7 @@ module.exports = {
         },
         {
             email: 'dorian@tarin.com',
-            password_hash: '$2b$10$qMNmU2B8ntspiIFejFVMq.w5UpNdITNcXUpAzNwbYx45lwtPjY2eW',
+            password_hash: '$2b$10$qMNmU2B8ntspiIFejFVMq.w5UpNdITNcXUpAzNwbYx45lwtPjY2eW', // password
             username: 'DorianLeGoat',
             role_id: '695849930838',
             firstname: 'Dorian',
@@ -69,8 +69,8 @@ module.exports = {
         },
         {
             email: 'valentin@herve.com',
-            password_hash: '$2b$10$qMNmU2B8ntspiIFejFVMq.w5UpNdITNcXUpAzNwbYx45lwtPjY2eW',
-            username: 'ValoAdmin',
+            password_hash: '$2b$10$qMNmU2B8ntspiIFejFVMq.w5UpNdITNcXUpAzNwbYx45lwtPjY2eW', // password
+            username: 'ValAdmin',
             role_id: '142977898717',
             firstname: 'Valentin',
             lastname: 'Hervé',

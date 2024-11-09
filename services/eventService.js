@@ -55,6 +55,7 @@ async function updateEvent(event, event_id) {
         name: event.name,
         theme_code: event.theme_code,
         date: event.date,
+        price: event.price,
     });
 }
 

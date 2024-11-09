@@ -2,7 +2,8 @@ const userLikeEventService = require('../services/userLikeEventService');
 const userService = require('../services/userService');
 
 /**
- * Like the selected event. Send http status `200` if request is successful or `500` on internal server error.
+ * Like the selected event. Send http status `200` if request is successful, `400` if the event is already liked or
+ * `500` on internal server error.
  *
  * @param req
  * @param res
@@ -11,6 +12,13 @@ async function likeEvent(req, res) {
     try {
         const user_email = req.userEmail;
         const {event_id} = req.params;
+
+        const likedEvents = await userLikeEventService.getLikedEvents(user_email);
+
+        if (likedEvents.some((likedEvent) => `${likedEvent.event_id}` === `${event_id}`)) {
+            return res.status(400).json({message: 'Selected event is already liked'});
+        }
+
         await userLikeEventService.likeEvent(user_email, event_id);
         res.status(200).json({message: 'Event liked'});
     } catch (error) {
