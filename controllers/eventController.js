@@ -84,10 +84,10 @@ async function getEventById(req, res) {
 
 async function addEvent(req, res) {
     try {
-        const {created_by_email, theme_code, name, date, price} = req.body;
+        const {theme_code, name, date, price} = req.body;
 
         const eventToAdd = new Event({
-            created_by_email,
+            created_by_email: req.userEmail,
             theme_code,
             name,
             date,
