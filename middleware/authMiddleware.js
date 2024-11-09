@@ -1,6 +1,7 @@
 const jwt = require('jsonwebtoken');
 const constant = require('../constant')
 const chatService = require("../services/chatService");
+const eventService = require("../services/eventService");
 
 function verifyToken(req, res, next) {
     const token = req.cookies.token;
@@ -73,4 +74,44 @@ async function verifyUserHaveAccessToken(req, res, next) {
     }
 }
 
-module.exports = {verifyToken, verifyAdminToken, verifyUserHaveAccessToken};
+async function verifyUserIsEventCreator(req, res, next) {
+    const token = req.cookies.token;
+    if (!token) {
+        return res.status(401).json({error: 'Access denied'});
+    }
+    try {
+        const decoded = jwt.verify(token, process.env.JWT_SECRET);
+
+        const {event_id} = req.params;
+
+        if (!event_id) {
+            return res.status(404).json({message: 'Error - parameter event_id is undefined'});
+        }
+
+        const event = await eventService.getEventById(event_id);
+
+        if (event === null) {
+            return res.status(404).json({message: 'Error - event does not exist in database'});
+        }
+
+        req.event_id = event_id; // Save event_id for subroutes
+
+        if (event.created_by_email === decoded.userEmail) {
+            // User of the chat is allowed to see this chat
+            req.userEmail = decoded.userEmail;
+            next();
+        } else if (decoded.userRole && `${decoded.userRole}` === constant.ADMIN_ROLE_ID) {
+            // Admin is allowed to see the chats of all users
+            req.userEmail = decoded.userEmail;
+            req.isLoggedInAsAdmin = true // Save this information to add an alert when an admin is logged in in a chat but not a member of this chat
+            next();
+        } else {
+            return res.status(401).json({error: 'Access denied'});
+        }
+    } catch (error) {
+        console.error(error);
+        res.status(401).json({error: 'Invalid token'});
+    }
+}
+
+module.exports = {verifyToken, verifyAdminToken, verifyUserHaveAccessToken, verifyUserIsEventCreator};
