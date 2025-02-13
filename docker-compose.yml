@@ -16,7 +16,7 @@ services:
     volumes:
       - .:/app
       - mongo-data:/data/db
-    command: sh -c "npm run checkDB && npm run build"
+    command: sh -c "npm install && npm run checkDB && npm run build"
     networks:
       - backend
 
