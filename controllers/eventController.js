@@ -12,6 +12,7 @@ const fs = require('fs');
  * @param name name filter (partial match, case-insensitive)
  * @param price_min minimum price filter
  * @param price_max maximum price filter
+ * @param theme_code theme code filter
  * @returns the query filter object
  */
 function getEventsFilters(creator_email = null, date = null, name = null, price_min = null, price_max = null, theme_code = null) {
