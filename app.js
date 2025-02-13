@@ -91,8 +91,11 @@ io.on('connection', (socket) => {
 });
 
 async function connectToMongoDB() {
+    const mongoHost = process.env.DOCKER ? "mongo" : "localhost";
+    const mongoPort = process.env.MONGO_PORT || "27017";
+    const mongoURL = `mongodb://${mongoHost}:${mongoPort}/${process.env.DATABASE_NAME}`;
     try {
-        await mongoose.connect(`${process.env.DATABASE_URL}/${process.env.DATABASE_NAME}`, {
+        await mongoose.connect(mongoURL, {
             useNewUrlParser: true,
             useUnifiedTopology: true,
             serverSelectionTimeoutMS: 30000

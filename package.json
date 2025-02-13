@@ -5,6 +5,7 @@
   "main": "index.js",
   "scripts": {
     "initDB": "node initializeDatabase.js",
+    "checkDB": "node checkDatabase.js",
     "debug": "nodemon app.js",
     "build": "node app.js"
   },
