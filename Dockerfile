@@ -17,4 +17,4 @@ COPY . .
 EXPOSE ${PORT}
 
 # Démarrer l'application
-CMD [ "npm", "start" ]
+CMD [ "npm", "run", "build" ]
