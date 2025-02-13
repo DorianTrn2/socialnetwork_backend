@@ -12,9 +12,10 @@ const fs = require('fs');
  * @param name name filter (partial match, case-insensitive)
  * @param price_min minimum price filter
  * @param price_max maximum price filter
+ * @param theme_code theme code filter
  * @returns the query filter object
  */
-function getEventsFilters(creator_email = null, date = null, name = null, price_min = null, price_max = null) {
+function getEventsFilters(creator_email = null, date = null, name = null, price_min = null, price_max = null, theme_code = null) {
     const filter = {}
 
     if (creator_email) {
@@ -22,6 +23,9 @@ function getEventsFilters(creator_email = null, date = null, name = null, price_
     }
     if (date) {
         filter["date"] = date;
+    }
+    if (theme_code) {
+        filter["theme_code"] = theme_code;
     }
     if (name) {
         filter["name"] = {"$regex": name, "$options": "i"};
@@ -58,9 +62,10 @@ async function getAllEvents(req, res) {
             name,
             price_min,
             price_max,
+            theme_code,
         } = req.query;
 
-        const filter = getEventsFilters(creator_email, date, name, price_min, price_max);
+        const filter = getEventsFilters(creator_email, date, name, price_min, price_max, theme_code);
         let events;
 
         if (sort_by_date === '1' || sort_by_date === '-1') {
