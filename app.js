@@ -20,17 +20,14 @@ const {Server} = require("socket.io");
 const app = express();
 dotenv.config();
 
-app.use((req, res, next) => {
-    res.header('Access-Control-Allow-Origin', '*');
-    res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
-    res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+const cors = require('cors');
 
-    if (req.method === 'OPTIONS') {
-        return res.sendStatus(200);
-    }
-
-    next();
-});
+app.use(cors({
+    origin: ['http://localhost:4200', 'http://localhost:8080'],
+    methods: 'GET, POST, PUT, DELETE, OPTIONS',
+    allowedHeaders: 'Content-Type, Authorization',
+    credentials: true
+}));
 
 const publicDir = path.join(__dirname, 'public');
 if (!fs.existsSync(publicDir)) {
