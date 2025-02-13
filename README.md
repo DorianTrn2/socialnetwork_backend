@@ -1,6 +1,8 @@
 # NodeJS Social Network
 
-## Project initialization
+## Manual setup
+
+### Project initialization
 
 In the project folder, run ```npm install```.
 
@@ -17,6 +19,14 @@ This will create a database according to the environment variable `DATABASE_NAME
 To run the application, run ```npm run build```.
 
 This will start the application in an url according to the environment variables `SERVER_URI` and `PORT` (found in `.env` file, default url is `http://localhost:3001`).
+
+## Containerized setup 
+
+In the project folder, run ```docker compose up``` with Docker service up.
+
+It will create two containers : one for application, one for database.
+
+Database will be populated, and application will be available according to environment variables `SERVER_URI` and `PORT` (found in `.env` file, default url is `http://localhost:3001`).
 
 ## Available requests
 
