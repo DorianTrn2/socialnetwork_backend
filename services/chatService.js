@@ -35,8 +35,19 @@ async function getChatById(id) {
     return Chat.findById(id).exec();
 }
 
+/**
+ * Insert a chat in the database.
+ *
+ * @param chat the chat to save
+ * @returns the saved chat Object
+ */
+async function addChat(chat) {
+    return chat.save();
+}
+
 module.exports = {
     getAllChats,
     getAllChatsOfUser,
     getChatById,
+    addChat,
 }

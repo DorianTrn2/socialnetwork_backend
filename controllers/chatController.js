@@ -1,6 +1,7 @@
 const chatService = require("../services/chatService")
 const messageService = require("../services/messageService")
 const userService = require("../services/userService");
+const Chat = require("../models/Chat");
 
 /**
  * Get all existing chats. Send http status `200` if request is successful, `400` on bad request or `500` on
@@ -118,8 +119,52 @@ async function getChatById(req, res) {
     }
 }
 
+/**
+ * Add a chat in the database. Verify if the emails of user 1 (the connected user) and user 2 exist, are not the same
+ * and do not already have a chat between each other. Send http status `201` if request is successful, `400` on bad
+ * request or `500` on internal server error.
+ *
+ * @param req
+ * @param res
+ * @returns the newly created chat
+ */
+async function addChat(req, res) {
+    try {
+        const {user_email} = req.body;
+        const {userEmail} = req; // Connected user
+
+        const user2 = await userService.getUserByEmail(user_email);
+
+        if (!user2) {
+            return res.status(400).json({message: 'Error - user_email does not exist'});
+        }
+
+        const chatsOfUser = await chatService.getAllChatsOfUser(userEmail);
+
+        // Verify that no chats already exists between these two users
+        if (chatsOfUser.some((chat) => chat.user_email1 === user_email || chat.user_email2 === user_email)) {
+            return res.status(400).json({message: 'Error - a chat between these two users already exist'});
+        }
+
+        const newChat = await chatService.addChat(new Chat({
+            user_email1: userEmail,
+            user_email2: user_email
+        }));
+
+        if (newChat === null) {
+            return res.status(400).json({message: 'Error - received object is null => not inserted'});
+        }
+
+        res.status(201).json(newChat);
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({message: 'Internal server error'});
+    }
+}
+
 module.exports = {
     getAllChats,
     getAllChatsOfUser,
     getChatById,
+    addChat,
 }

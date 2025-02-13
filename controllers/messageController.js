@@ -25,7 +25,7 @@ async function getAllMessages(req, res) {
 }
 
 /**
- * Add a message in the database en emit it to the websockets. Send http status `201` if request is successful, `404`
+ * Add a message in the database and emit it to the websockets. Send http status `201` if request is successful, `404`
  * on null object received or `500` on internal server error.
  *
  * @param req

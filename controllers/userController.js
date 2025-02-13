@@ -107,10 +107,7 @@ async function myProfile(req, res) {
  */
 async function getImage(req, res) {
     try {
-        const userEmail = req.userEmail;
-        const username = (await userService.getUserByEmail(userEmail)).username;
-
-        console.log(username)
+        const username = req.params.user_username;
 
         const ppDir = path.join(__dirname, `../public/pp`);
         const defaultPicture = path.join(ppDir, '_default.png');
