@@ -66,6 +66,16 @@ app.use((req, res, next) => {
     next();
 });
 
+const cors = require('cors');
+
+const corsOptions = {
+    origin: '*',
+    methods: 'GET,POST,PUT,DELETE,OPTIONS',
+    allowedHeaders: 'Content-Type, Authorization'
+};
+
+app.use(cors(corsOptions));
+
 app.use('/', indexRouter);
 app.use('/auth', authRouter);
 app.use('/event', homeRouter);
