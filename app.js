@@ -112,11 +112,25 @@ async function connectToMongoDB() {
             useUnifiedTopology: true,
             serverSelectionTimeoutMS: 30000
         });
-        console.log("Connected to MongoDB");
+
+        console.log("\n\n#------------------------ #\n");
+        console.log("Connected to MongoDB at", mongoURL);
+        console.log("\n#----------------------#\n\n");
+
 
     } catch (error) {
+        console.error("\n\n#------------------------#\n");
         console.error("Error while connectiong to MongoDB:", error);
+        console.log("\n#----------------------#\n\n");
     }
 }
 
-connectToMongoDB();
+connectToMongoDB().then(() => {
+    console.log(`#----------------------#
+        \n App started successfully
+        \n Listening on port: ${port}
+        \n Server URL: ${process.env.SERVER_URI}:${port}
+        \n MongoDB URL: mongodb://${process.env.DOCKER ? "mongo" : "localhost"}:${process.env.MONGO_PORT || "27017"}/${process.env.DATABASE_NAME}
+        \n#----------------------#\n`);
+    });
+
