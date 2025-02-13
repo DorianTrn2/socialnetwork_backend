@@ -1,0 +1,40 @@
+version: '3.8'
+
+services:
+  app:
+    build: .
+    ports:
+      - "${PORT}:${PORT}"
+    environment:
+      - PORT=${PORT}
+      - DATABASE_URL=${DATABASE_URL}
+      - DATABASE_NAME=${DATABASE_NAME}
+      - DOCKER=true
+      - MONGO_PORT=${MONGO_PORT}
+    depends_on:
+      - mongo
+    volumes:
+      - .:/app
+      - mongo-data:/data/db
+    command: sh -c "npm run checkDB && npm run build"
+    networks:
+      - backend
+
+  mongo:
+    image: mongo:latest
+    ports:
+      - "${MONGO_PORT}:${MONGO_PORT}"
+    environment:
+      - MONGO_INITDB_DATABASE=${DATABASE_NAME}
+    networks:
+      - backend
+    volumes:
+      - mongo-data:/data/db
+
+
+volumes:
+  mongo-data:
+
+networks:
+  backend:
+    driver: bridge
