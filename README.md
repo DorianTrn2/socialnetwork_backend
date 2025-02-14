@@ -57,7 +57,7 @@ Some requests require the id of an object generated during database initializati
 
 ![get](https://img.shields.io/badge/GET-2adb59?style=for-the-badge&logo=test&logoColor=white)  `/event`: list all events
 
-![get](https://img.shields.io/badge/GET-2adb59?style=for-the-badge&logo=test&logoColor=white)  `/event/new`: create an event *(connected)*
+![post](https://img.shields.io/badge/POST-c94a3e?style=for-the-badge&logo=test&logoColor=white)  `/event/new`: create an event *(connected)*
 
 ![get](https://img.shields.io/badge/GET-2adb59?style=for-the-badge&logo=test&logoColor=white)  `/event/:event_id`: get the event with id `:event_id`
 
