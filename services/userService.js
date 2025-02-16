@@ -43,20 +43,20 @@ async function getUserByUsername(username) {
  * Update a user in the database.
  *
  * @param email email of the user to update
- * @param login username (unique)
- * @param password user clear password (that will be hashed)
+ // * @param login username (unique)
+ // * @param password user clear password (that will be hashed)
  * @param role_id user role id
  * @param firstname user firstname
  * @param lastname user lastname
  * @param birthday user birthdate
  * @returns the update result object
  */
-async function updateUser(email, login, password, role_id, firstname, lastname, birthday) {
-    const hashedPassword = await bcrypt.hash(password, 10);
+async function updateUser(email, role_id, firstname, lastname, birthday) {
+    // const hashedPassword = await bcrypt.hash(password, 10);
     return User.updateOne({email: email}, {
         email,
-        password_hash: hashedPassword,
-        username: login,
+        // password_hash: hashedPassword,
+        // username: login,
         role_id,
         firstname,
         lastname,
