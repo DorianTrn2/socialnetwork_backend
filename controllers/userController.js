@@ -32,10 +32,10 @@ async function getAllUsers(req, res) {
  */
 async function updateUser(req, res) {
     try {
-        const {login, password, firstname, lastname, birthday} = req.body;
+        const {firstname, lastname, birthday} = req.body;
         const user_email = req.userEmail;
 
-        if (!user_email || !login || !password || !firstname || !lastname || !birthday) {
+        if (!user_email || !firstname || !lastname || !birthday) {
             return res.status(400).json({error: 'Bad request'});
         }
 
@@ -47,21 +47,21 @@ async function updateUser(req, res) {
         if (!helper.nameIsValid(lastname)) {
             return res.status(400).json({error: 'Invalid lastname format'});
         }
-        if (!helper.usernameIsValid(login)) {
-            return res.status(400).json({error: 'Invalid username format'});
-        }
+        // if (!helper.usernameIsValid(login)) {
+        //     return res.status(400).json({error: 'Invalid username format'});
+        // }
         if (!helper.dateIsValid(birthday)) {
             return res.status(400).json({error: 'Invalid birthday format'});
         } else if (new Date() < new Date(birthday)) {
             return res.status(400).json({error: 'Invalid birthday (date in the future)'});
         }
-        if (user.username !== login) {
-            if (await helper.emailOrUsernameAreAlreadyUsed(login)) {
-                return res.status(400).json({error: 'Username is already used'});
-            }
-        }
+        // if (user.username !== login) {
+        //     if (await helper.emailOrUsernameAreAlreadyUsed(login)) {
+        //         return res.status(400).json({error: 'Username is already used'});
+        //     }
+        // }
 
-        await userService.updateUser(user_email, login, password, USER_ROLE_ID, firstname, lastname, birthday);
+        await userService.updateUser(user_email, USER_ROLE_ID, firstname, lastname, birthday);
         res.status(201).json({message: 'User updated successfully'});
     } catch (error) {
         res.status(500).json({error: 'Failed to update user'});
